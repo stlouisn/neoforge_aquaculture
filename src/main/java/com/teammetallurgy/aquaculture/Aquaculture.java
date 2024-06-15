@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture;
 
+import com.teammetallurgy.aquaculture.api.AquaArmorMaterials;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
@@ -47,14 +49,14 @@ public class Aquaculture {
             }).build()
     );
 
-    public Aquaculture(IEventBus modBus) {
+    public Aquaculture(ModContainer modContainer, IEventBus modBus) {
         instance = this;
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
         this.registerDeferredRegistries(modBus);
         modBus.addListener(this::registerCapabilities);
         modBus.addListener(this::addItemsToTabs);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
+        modContainer.registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
         AquacultureAPI.Tags.init();
 
         AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register("mob_spawn", AquaBiomeModifiers.MobSpawnBiomeModifier::makeCodec);
@@ -65,10 +67,6 @@ public class Aquaculture {
         event.enqueueWork(Hooks::load);
         event.enqueueWork(FishWeightHandler::registerFishData);
         event.enqueueWork(WormFarmBlock::addCompostables);
-        event.enqueueWork(AquaRecipes::registerBrewingRecipes);
-        if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
-            event.enqueueWork(FishRegistry::addCatBreeding);
-        }
     }
 
     private void setupClient(FMLClientSetupEvent event) {
@@ -77,6 +75,7 @@ public class Aquaculture {
 
     public void registerDeferredRegistries(IEventBus modBus) {
         AquaBlocks.BLOCK_DEFERRED.register(modBus);
+        AquaArmorMaterials.ARMOR_MATERIAL_DEFERRED.register(modBus);
         AquaItems.ITEM_DEFERRED.register(modBus);
         CREATIVE_TABS.register(modBus);
         AquaBlockEntities.BLOCK_ENTITY_DEFERRED.register(modBus);

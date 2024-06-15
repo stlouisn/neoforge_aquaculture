@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.loot;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -13,7 +14,7 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public record BiomeTagCheck(Optional<BiomeTagPredicate> predicate) implements LootItemCondition {
-    public static final Codec<BiomeTagCheck> CODEC = RecordCodecBuilder.create(rb -> rb.group(
+    public static final MapCodec<BiomeTagCheck> CODEC = RecordCodecBuilder.create(rb -> rb.group(
             ExtraCodecs.strictOptionalField(BiomeTagPredicate.CODEC, "predicate").forGetter(BiomeTagCheck::predicate)
     ).apply(rb, BiomeTagCheck::new));
     public static final LootItemConditionType BIOME_TAG_CHECK = new LootItemConditionType(CODEC);

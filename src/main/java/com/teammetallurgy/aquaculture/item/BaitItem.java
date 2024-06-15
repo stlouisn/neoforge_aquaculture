@@ -20,7 +20,7 @@ public class BaitItem extends Item {
     }
 
     @Override
-    public boolean canBeDepleted() {
+    public boolean isDamageable(ItemStack stack) {
         return this.durability > 0;
     }
 

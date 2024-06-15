@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.init.AquaEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidType;
 
@@ -25,11 +26,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TurtleLandEntity extends Animal {
+    private static final EntityDimensions BABY_DIMENSIONS = AquaEntities.BOX_TURTLE.get().getDimensions().scale(0.5F).withEyeHeight(0.175F);
+
 
     public TurtleLandEntity(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
         this.moveControl = new TurtleLandMovementController(this);
-        this.setPathfindingMalus(BlockPathTypes.WATER, 0.2F);
+        this.setPathfindingMalus(PathType.WATER, 0.2F);
     }
 
     @Override
@@ -73,12 +76,6 @@ public class TurtleLandEntity extends Animal {
     protected float getWaterSlowDown() {
         return 1.0F;
     }
-
-    @Override
-    protected float getStandingEyeHeight(@Nonnull Pose pose, @Nonnull EntityDimensions size) {
-        return this.isBaby() ? size.height * 0.75F : size.height * 0.7F;
-    }
-
     public class TurtleLandSwimGoal extends FloatGoal {
 
         public TurtleLandSwimGoal() {

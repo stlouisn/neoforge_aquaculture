@@ -100,7 +100,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
                     BlockEntity tileEntity = world.getBlockEntity(pos);
                     if (tileEntity != null) {
                         ItemStack giveStack = new ItemStack(this);
-                        tileEntity.saveToItem(giveStack);
+                        tileEntity.saveToItem(giveStack, player.level().registryAccess());
                         StackHelper.giveItem(serverPlayer, giveStack);
                         world.removeBlock(pos, false);
                         world.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6F, 0.8F);
@@ -178,7 +178,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     }
 
     @Override
-    public boolean isPathfindable(@Nonnull BlockState state, @Nonnull BlockGetter blockReader, @Nonnull BlockPos pos, @Nonnull PathComputationType type) {
+    protected boolean isPathfindable(@Nonnull BlockState state, @Nonnull PathComputationType pathComputationType) {
         return false;
     }
 
@@ -202,7 +202,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
 
         if (blockEntity instanceof TackleBoxBlockEntity) {
             ItemStack tackleBox = new ItemStack(this);
-            blockEntity.saveToItem(tackleBox);
+            blockEntity.saveToItem(tackleBox, player.level().registryAccess());
             Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tackleBox);
         }
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
@@ -212,7 +212,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         ItemStack cloneItemStack = super.getCloneItemStack(state, target, level, pos, player);
         level.getBlockEntity(pos, AquaBlockEntities.TACKLE_BOX.get()).ifPresent((blockEntity) -> {
-            blockEntity.saveToItem(cloneItemStack);
+            blockEntity.saveToItem(cloneItemStack, player.level().registryAccess());
         });
         return cloneItemStack;
     }

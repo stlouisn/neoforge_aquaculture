@@ -11,12 +11,15 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ToolActions;
 import org.joml.Matrix3f;
@@ -25,10 +28,10 @@ import org.joml.Matrix4f;
 import javax.annotation.Nonnull;
 
 public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> {
-    private static final ResourceLocation BOBBER = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber.png");
-    private static final ResourceLocation BOBBER_OVERLAY = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_overlay.png");
-    private static final ResourceLocation BOBBER_VANILLA = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_vanilla.png");
-    private static final ResourceLocation HOOK = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/hook/hook.png");
+    private static final ResourceLocation BOBBER = ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber.png");
+    private static final ResourceLocation BOBBER_OVERLAY = ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_overlay.png");
+    private static final ResourceLocation BOBBER_VANILLA = ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_vanilla.png");
+    private static final ResourceLocation HOOK = ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "textures/entity/rod/hook/hook.png");
     private static final RenderType BOBBER_RENDER = RenderType.entityCutout(BOBBER);
     private static final RenderType BOBBER_OVERLAY_RENDER = RenderType.entityCutout(BOBBER_OVERLAY);
     private static final RenderType BOBBER_VANILLA_RENDER = RenderType.entityCutout(BOBBER_VANILLA);
@@ -58,12 +61,14 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             float bobberG = 1.0F;
             float bobberB = 1.0F;
             if (!bobberStack.isEmpty()) {
-                if (bobberStack.getItem() instanceof DyeableLeatherItem) {
-                    int colorInt = ((DyeableLeatherItem) bobberStack.getItem()).getColor(bobberStack);
-                    bobberR = (float) (colorInt >> 16 & 255) / 255.0F;
-                    bobberG = (float) (colorInt >> 8 & 255) / 255.0F;
-                    bobberB = (float) (colorInt & 255) / 255.0F;
+                if (bobberStack.is(ItemTags.DYEABLE)) {
+                    DyedItemColor dyeditemcolor = bobberStack.get(DataComponents.DYED_COLOR);
+                    if (dyeditemcolor != null) {
+                    bobberR = FastColor.ARGB32.red(dyeditemcolor.rgb());
+                    bobberG = FastColor.ARGB32.green(dyeditemcolor.rgb());
+                    bobberB = FastColor.ARGB32.blue(dyeditemcolor.rgb());
                 }
+                    }
             }
             vertex(bobberOverlayVertex, posMatrix, matrix3f, i, 0.0F, 0, 0, 1, bobberR, bobberG, bobberB);
             vertex(bobberOverlayVertex, posMatrix, matrix3f, i, 1.0F, 0, 1, 1, bobberR, bobberG, bobberB);
@@ -135,12 +140,11 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             float g = 0;
             float b = 0;
             if (!line.isEmpty()) {
-                DyeableLeatherItem lineItem = (DyeableLeatherItem) line.getItem();
-                if (lineItem.hasCustomColor(line)) {
-                    int colorInt = lineItem.getColor(line);
-                    r = (float) (colorInt >> 16 & 255) / 255.0F;
-                    g = (float) (colorInt >> 8 & 255) / 255.0F;
-                    b = (float) (colorInt & 255) / 255.0F;
+                DyedItemColor dyeditemcolor = line.get(DataComponents.DYED_COLOR);
+                if (dyeditemcolor != null) {
+                    r = FastColor.ARGB32.red(dyeditemcolor.rgb());
+                    g = FastColor.ARGB32.green(dyeditemcolor.rgb());
+                    b = FastColor.ARGB32.blue(dyeditemcolor.rgb());
                 }
             }
             for (int size = 0; size < 16; ++size) {
@@ -158,11 +162,11 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
     }
 
     private static void renderPosTexture(VertexConsumer builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v) {
-        builder.vertex(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(255, 255, 255, 255).uv((float) u, (float) v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+        builder.addVertex(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).setColor(255, 255, 255, 255).setUv((float) u, (float) v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(i).setNormal(0.0F, 1.0F, 0.0F);
     }
 
     private static void vertex(VertexConsumer builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v, float r, float g, float b) {
-        builder.vertex(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(r, g, b, 1.0F).uv((float) u, (float) v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+        builder.addVertex(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).setColor(r, g, b, 1.0F).setUv((float) u, (float) v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(i).setNormal(0.0F, 1.0F, 0.0F);
     }
 
     private static void stringVertex(float x, float y, float z, VertexConsumer vertexConsumer, PoseStack.Pose pose, float f1, float f2, float r, float g, float b) {
@@ -176,7 +180,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
         var10 /= var13;
         var11 /= var13;
         var12 /= var13;
-        vertexConsumer.vertex(pose.pose(), var7, var8, var9).color(r, g, b, 1.0F).normal(pose.normal(), var10, var11, var12).endVertex();
+        vertexConsumer.addVertex(pose.pose(), var7, var8, var9).setColor(r, g, b, 1.0F).setNormal(pose, var10, var11, var12);
     }
 
     private static float fraction(int value1, int value2) {

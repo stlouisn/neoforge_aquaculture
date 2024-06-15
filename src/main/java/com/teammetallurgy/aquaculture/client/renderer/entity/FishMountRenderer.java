@@ -32,12 +32,12 @@ import java.math.MathContext;
 import java.text.DecimalFormat;
 
 public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
-    public static final ModelResourceLocation OAK = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "oak_fish_mount"), "");
-    public static final ModelResourceLocation SPRUCE = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "spruce_fish_mount"), "");
-    public static final ModelResourceLocation BIRCH = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "birch_fish_mount"), "");
-    public static final ModelResourceLocation JUNGLE = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "jungle_fish_mount"), "");
-    public static final ModelResourceLocation ACACIA = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "acacia_fish_mount"), "");
-    public static final ModelResourceLocation DARK_OAK = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "dark_oak_fish_mount"), "");
+    public static final ModelResourceLocation OAK = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "oak_fish_mount"), "");
+    public static final ModelResourceLocation SPRUCE = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "spruce_fish_mount"), "");
+    public static final ModelResourceLocation BIRCH = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "birch_fish_mount"), "");
+    public static final ModelResourceLocation JUNGLE = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "jungle_fish_mount"), "");
+    public static final ModelResourceLocation ACACIA = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "acacia_fish_mount"), "");
+    public static final ModelResourceLocation DARK_OAK = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "dark_oak_fish_mount"), "");
     private final Minecraft mc = Minecraft.getInstance();
 
     public FishMountRenderer(EntityRendererProvider.Context context) {
@@ -114,8 +114,8 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
     }
 
     @Override
-    protected void renderNameTag(@Nonnull FishMountEntity fishMount, @Nonnull Component name, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i) {
-        super.renderNameTag(fishMount, fishMount.entity.getDisplayName(), matrixStack, buffer, i);
+    protected void renderNameTag(@Nonnull FishMountEntity fishMount, @Nonnull Component name, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i, float partialTick) {
+        super.renderNameTag(fishMount, fishMount.entity.getDisplayName(), matrixStack, buffer, i, partialTick);
 
         ItemStack stack = fishMount.getDisplayedItem();
         if (stack.hasTag() && stack.getTag() != null && stack.getTag().contains("fishWeight")) {
@@ -129,9 +129,9 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
             matrixStack.pushPose();
             matrixStack.translate(0.0D, -0.25D, 0.0D); //Adjust weight label height
             if (bd.doubleValue() > 999) {
-                super.renderNameTag(fishMount, Component.translatable("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), matrixStack, buffer, i - 100);
+                super.renderNameTag(fishMount, Component.translatable("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), matrixStack, buffer, i - 100, partialTick);
             } else {
-                super.renderNameTag(fishMount, Component.translatable("aquaculture.fishWeight.weight", bd + lb), matrixStack, buffer, i);
+                super.renderNameTag(fishMount, Component.translatable("aquaculture.fishWeight.weight", bd + lb), matrixStack, buffer, i, partialTick);
             }
             matrixStack.popPose();
         }

@@ -14,6 +14,7 @@ import net.minecraft.world.item.Items;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.StringUtils;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
@@ -25,7 +26,7 @@ import java.text.DecimalFormat;
 
 import static com.teammetallurgy.aquaculture.init.AquaItems.*;
 
-@Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
+@EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class FishWeightHandler {
 
     @SubscribeEvent

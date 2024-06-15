@@ -32,7 +32,7 @@ public class HookItem extends Item {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level world, List<Component> tooltips, TooltipFlag tooltipFlag) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Item.TooltipContext tooltipContext, List<Component> tooltips, TooltipFlag tooltipFlag) {
         Hook hook = getHookType();
         if (hook != Hooks.EMPTY && hook.getFluids().contains(FluidTags.LAVA)) {
             if (hook.getFluids().contains(FluidTags.WATER)) {
@@ -43,6 +43,6 @@ public class HookItem extends Item {
                 tooltips.add(lava.withStyle(lava.getStyle().withColor(ChatFormatting.RED)));
             }
         }
-        super.appendHoverText(stack, world, tooltips, tooltipFlag);
+        super.appendHoverText(stack, tooltipContext, tooltips, tooltipFlag);
     }
 }

@@ -64,11 +64,11 @@ public class ItemFilletKnife extends SwordItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level world, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag tooltipFlag) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Item.TooltipContext tooltipContext, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag tooltipFlag) {
         if (this.getTier() == AquacultureAPI.MATS.NEPTUNIUM) {
             MutableComponent unbreakable = Component.translatable("aquaculture.unbreakable");
             tooltip.add(unbreakable.withStyle(unbreakable.getStyle().withColor(ChatFormatting.DARK_GRAY).withBold(true)));
         }
-        super.appendHoverText(stack, world, tooltip, tooltipFlag);
+        super.appendHoverText(stack, tooltipContext, tooltip, tooltipFlag);
     }
 }

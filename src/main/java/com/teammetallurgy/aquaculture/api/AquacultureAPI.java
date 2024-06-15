@@ -53,11 +53,11 @@ public class AquacultureAPI {
         public static final TagKey<Biome> EMPTY = biomeTag("aquaculture","is_twilight");
 
         public static TagKey<Item> tag(String modID, String name) {
-            return ItemTags.create(new ResourceLocation(modID, name));
+            return ItemTags.create(ResourceLocation.fromNamespaceAndPath(modID, name));
         }
 
         public static TagKey<Biome> biomeTag(String modID, String name) {
-            return TagKey.create(Registries.BIOME, new ResourceLocation(modID, name));
+            return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(modID, name));
         }
 
         public static void init() {
