@@ -33,12 +33,6 @@ import java.math.MathContext;
 import java.text.DecimalFormat;
 
 public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
-    public static final ModelResourceLocation OAK = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/oak_fish_mount"));
-    public static final ModelResourceLocation SPRUCE = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/spruce_fish_mount"));
-    public static final ModelResourceLocation BIRCH = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/birch_fish_mount"));
-    public static final ModelResourceLocation JUNGLE = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/jungle_fish_mount"));
-    public static final ModelResourceLocation ACACIA = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/acacia_fish_mount"));
-    public static final ModelResourceLocation DARK_OAK = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/dark_oak_fish_mount"));
     private final Minecraft mc = Minecraft.getInstance();
 
     public FishMountRenderer(EntityRendererProvider.Context context) {
@@ -120,7 +114,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
 
         ItemStack stack = fishMount.getDisplayedItem();
         Float fishWeight = stack.get(AquaDataComponents.FISH_WEIGHT.get());
-        if (stack.has(AquaDataComponents.FISH_WEIGHT) && fishWeight != null) { //TODO test
+        if (stack.has(AquaDataComponents.FISH_WEIGHT) && fishWeight != null) {
             float weight = fishWeight;
             String lb = weight == 1.0D ? " lb" : " lbs";
 

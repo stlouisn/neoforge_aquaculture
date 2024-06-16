@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.SpectralArrowRenderer;
 import net.minecraft.client.renderer.entity.TippableArrowRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
@@ -97,12 +98,12 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void registerModels(ModelEvent.RegisterAdditional event) {
-        event.register(FishMountRenderer.OAK);
-        event.register(FishMountRenderer.SPRUCE);
-        event.register(FishMountRenderer.BIRCH);
-        event.register(FishMountRenderer.JUNGLE);
-        event.register(FishMountRenderer.ACACIA);
-        event.register(FishMountRenderer.DARK_OAK);
+        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/oak_fish_mount")));
+        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/spruce_fish_mount")));
+        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/birch_fish_mount")));
+        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/jungle_fish_mount")));
+        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/acacia_fish_mount")));
+        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/dark_oak_fish_mount")));
     }
 
     public static void registerFishingRodModelProperties(Item fishingRod) {

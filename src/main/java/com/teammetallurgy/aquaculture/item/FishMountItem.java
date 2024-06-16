@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.HangingEntityItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemFrameItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
@@ -36,18 +37,18 @@ public class FishMountItem extends HangingEntityItem {
         if (player != null && !this.mayPlace(player, direction, useStack, offset)) {
             return InteractionResult.FAIL;
         } else {
-            Level world = context.getLevel();
-            FishMountEntity fishMountEntity = new FishMountEntity(this.fishMount.get(), world, offset, direction);
+            Level level = context.getLevel();
+            FishMountEntity fishMountEntity = new FishMountEntity(this.fishMount.get(), level, offset, direction);
 
             CustomData customData = useStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
             if (!customData.isEmpty()) {
-                EntityType.updateCustomEntityTag(world, player, fishMountEntity, customData);
+                EntityType.updateCustomEntityTag(level, player, fishMountEntity, customData);
             }
 
             if (fishMountEntity.survives()) {
-                if (!world.isClientSide) {
+                if (!level.isClientSide) {
                     fishMountEntity.playPlacementSound();
-                    world.addFreshEntity(fishMountEntity);
+                    level.addFreshEntity(fishMountEntity);
                 }
                 useStack.shrink(1);
             }

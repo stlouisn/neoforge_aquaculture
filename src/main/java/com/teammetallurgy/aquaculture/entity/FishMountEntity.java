@@ -87,18 +87,17 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
             return false;
         } else {
             BlockState state = this.level().getBlockState(this.pos.relative(this.direction.getOpposite()));
-            return (state.isSolid() || this.direction.getAxis().isHorizontal() && DiodeBlock.isDiode(state)) && this.level().getEntities(this, this.getBoundingBox(), HANGING_ENTITY).isEmpty();
-        }
+            return (state.isSolid() || this.direction.getAxis().isHorizontal() && DiodeBlock.isDiode(state)) && this.level().getEntities(this, this.getBoundingBox(), HANGING_ENTITY).isEmpty();        }
     }
 
     @Override
     @Nonnull
-    protected AABB calculateBoundingBox(@Nonnull BlockPos pos, @Nonnull Direction direction) {
+    protected AABB calculateBoundingBox(@Nonnull BlockPos pos, @Nonnull Direction direction) { //TODO Needs to be redone most likely, but works for getting entity to place
         Vec3 vec3 = Vec3.atCenterOf(pos).relative(direction, -0.46875);
         Direction.Axis axis = direction.getAxis();
-        double x = axis == Direction.Axis.X ? 0.0625 * 3 : 0.5;
-        double y = axis == Direction.Axis.Y ? 0.0625 * 3 : 0.5;
-        double z = axis == Direction.Axis.Z ? 0.0625 * 3 : 0.5;
+        double x = axis == Direction.Axis.X ? 0.0625 : 0.5;
+        double y = axis == Direction.Axis.Y ? 0.0625 : 0.5;
+        double z = axis == Direction.Axis.Z ? 0.0625 : 0.5;
 
         return AABB.ofSize(vec3, x, y, z);
     }
@@ -235,7 +234,7 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
         super.readAdditionalSaveData(compound);
         CompoundTag nbt = compound.getCompound("Item");
         if (nbt != null && !nbt.isEmpty()) {
-            ItemStack nbtStack = ItemStack.parse(this.registryAccess(), compound).orElse(ItemStack.EMPTY);
+            ItemStack nbtStack = ItemStack.parseOptional(this.registryAccess(), compound);
             if (nbtStack.isEmpty()) {
                 PRIVATE_LOGGER.warn("Unable to load item from: {}", nbt);
             }
