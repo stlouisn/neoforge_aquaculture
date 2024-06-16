@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.loot;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
+import com.teammetallurgy.aquaculture.init.AquaDataComponents;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +16,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.StringUtils;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
@@ -48,13 +48,14 @@ public class FishWeightHandler {
     @OnlyIn(Dist.CLIENT)
     public static void onTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        if (!stack.isEmpty() && stack != null && stack.hasTag() && stack.getTag() != null) { //Keep stack null check, in case of other mods is doing bad things
-            if (stack.getTag().contains("fishSize")) {
-                MutableComponent fishWeightString = Component.translatable("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize")));
+        if (!stack.isEmpty() && stack != null && stack.has(AquaDataComponents.FISH_WEIGHT)) { //Keep stack null check, in case of other mods is doing bad things
+            Float fishWeight = stack.get(AquaDataComponents.FISH_WEIGHT);
+            if (stack.has(AquaDataComponents.FISH_SIZE)) {
+                MutableComponent fishWeightString = Component.translatable("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.get(AquaDataComponents.FISH_SIZE)));
                 event.getToolTip().add(fishWeightString.withStyle(fishWeightString.getStyle().withItalic(true).withColor(ChatFormatting.AQUA)));
             }
-            if (stack.getTag().contains("fishWeight")) {
-                double weight = stack.getTag().getDouble("fishWeight");
+            if (fishWeight != null) {
+                double weight = fishWeight;
                 String lb = weight == 1.0D ? " lb" : " lbs";
 
                 DecimalFormat df = new DecimalFormat("#,###.##");
@@ -75,24 +76,19 @@ public class FishWeightHandler {
         if (fish.isEmpty()) {
             return;
         }
-        double weight = min + Math.random() * (max - min);
+        float weight = (float) (min + Math.random() * (max - min));
 
-        if (!fish.hasTag()) {
-            fish.setTag(new CompoundTag());
-        }
+        if (!fish.has(AquaDataComponents.FISH_WEIGHT)) {
 
-        CompoundTag tag = fish.getTag();
-
-        if (tag != null) {
-            tag.putDouble("fishWeight", weight);
+            fish.set(AquaDataComponents.FISH_WEIGHT, weight);
             if (weight <= max * 0.10F) {
-                tag.putString("fishSize", "juvenile");
+                fish.set(AquaDataComponents.FISH_SIZE, "juvenile");
             } else if (weight > max * 0.10F && weight <= max * 0.20F) {
-                tag.putString("fishSize", "small");
+                fish.set(AquaDataComponents.FISH_SIZE, "small");
             } else if (weight >= max * 0.80F && weight < max * 0.90F) {
-                tag.putString("fishSize", "large");
+                fish.set(AquaDataComponents.FISH_SIZE, "large");
             } else if (weight >= max * 0.90F) {
-                tag.putString("fishSize", "massive");
+                fish.set(AquaDataComponents.FISH_SIZE, "massive");
             }
         }
     }

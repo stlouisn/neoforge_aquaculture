@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -13,7 +14,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
@@ -90,20 +90,20 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
 
     @Override
     @Nonnull
-    public InteractionResult use(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult hit) {
-        if (world.isClientSide) {
+    public InteractionResult useWithoutItem(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull BlockHitResult blockHitResult) {
+        if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
-            MenuProvider container = this.getMenuProvider(state, world, pos);
+            MenuProvider container = this.getMenuProvider(state, level, pos);
             if (container != null && player instanceof ServerPlayer serverPlayer) {
                 if (player.isShiftKeyDown()) {
-                    BlockEntity tileEntity = world.getBlockEntity(pos);
+                    BlockEntity tileEntity = level.getBlockEntity(pos);
                     if (tileEntity != null) {
                         ItemStack giveStack = new ItemStack(this);
                         tileEntity.saveToItem(giveStack, player.level().registryAccess());
                         StackHelper.giveItem(serverPlayer, giveStack);
-                        world.removeBlock(pos, false);
-                        world.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6F, 0.8F);
+                        level.removeBlock(pos, false);
+                        level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6F, 0.8F);
                     }
                 } else {
                     serverPlayer.openMenu(container, pos);
@@ -123,7 +123,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
 
     @Override
     public void setPlacedBy(@Nonnull Level world, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
-        if (stack.hasCustomHoverName()) {
+        if (stack.has(DataComponents.CUSTOM_NAME)) {
             BlockEntity tileentity = world.getBlockEntity(pos);
             if (tileentity instanceof TackleBoxBlockEntity) {
                 ((TackleBoxBlockEntity) tileentity).setCustomName(stack.getHoverName());

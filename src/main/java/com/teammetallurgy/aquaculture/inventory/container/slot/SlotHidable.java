@@ -43,6 +43,7 @@ public class SlotHidable extends SlotItemHandler {
 
     @Override
     public void setChanged() { //Save changes to the rod
+        super.setChanged();
         ItemStack stack = this.fishingRod.getItem();
         if (!stack.isEmpty()) {
             CompoundTag tag = stack.getOrCreateTag();

@@ -14,8 +14,8 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public record BiomeTagCheck(Optional<BiomeTagPredicate> predicate) implements LootItemCondition {
-    public static final MapCodec<BiomeTagCheck> CODEC = RecordCodecBuilder.create(rb -> rb.group(
-            ExtraCodecs.strictOptionalField(BiomeTagPredicate.CODEC, "predicate").forGetter(BiomeTagCheck::predicate)
+    public static final MapCodec<BiomeTagCheck> CODEC = RecordCodecBuilder.mapCodec(rb -> rb.group(
+            BiomeTagPredicate.CODEC.optionalFieldOf("predicate").forGetter(BiomeTagCheck::predicate)
     ).apply(rb, BiomeTagCheck::new));
     public static final LootItemConditionType BIOME_TAG_CHECK = new LootItemConditionType(CODEC);
 

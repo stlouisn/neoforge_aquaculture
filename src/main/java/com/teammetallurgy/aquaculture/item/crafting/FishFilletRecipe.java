@@ -3,12 +3,15 @@ package com.teammetallurgy.aquaculture.item.crafting;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
+import com.teammetallurgy.aquaculture.init.AquaDataComponents;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
@@ -18,6 +21,8 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -80,8 +85,9 @@ public class FishFilletRecipe extends CustomRecipe {
         }
         if (!fish.isEmpty() && knife != null) {
             int filletAmount = AquacultureAPI.FISH_DATA.getFilletAmount(fish.getItem());
-            if (AquaConfig.BASIC_OPTIONS.randomWeight.get() && fish.getTag() != null && fish.getTag().contains("fishWeight")) {
-                filletAmount = FishData.getFilletAmountFromWeight(fish.getTag().getDouble("fishWeight"));
+            Float fishWeight = fish.get(AquaDataComponents.FISH_WEIGHT.get());
+            if (AquaConfig.BASIC_OPTIONS.randomWeight.get() && fish.has(AquaDataComponents.FISH_WEIGHT) && fishWeight != null) {
+                filletAmount = FishData.getFilletAmountFromWeight(fishWeight);
             }
             if (isKnifeNeptunium(knife)) {
                 filletAmount += filletAmount * (25.0F / 100.0F);
@@ -101,8 +107,11 @@ public class FishFilletRecipe extends CustomRecipe {
             if (stack.is(AquacultureAPI.Tags.KNIVES)) {
                 ItemStack knife = stack.copy();
                 if (!isKnifeNeptunium(knife.getItem())) {
-                    if (knife.hurtAndBreak(1, RandomSource.create(),null)) {
-                        knife.shrink(1);
+                    MinecraftServer server = ServerLifecycleHooks.getCurrentServer(); //Workaround //TODO test
+                    if (server != null) {
+                        knife.hurtAndBreak(1, server.overworld(), null, item -> {
+                            knife.shrink(1);
+                        });
                     }
                 }
                 list.set(i, knife);

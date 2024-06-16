@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -69,7 +70,7 @@ public class AquaFishingRodItem extends FishingRodItem {
         int damage = this.getDamage(heldStack);
         if (damage >= this.getMaxDamage(heldStack))
             return new InteractionResultHolder<>(InteractionResult.FAIL, heldStack);
-        Hook hook = getHookType(heldStack);
+        Hook hook = getHookType(heldStack, level.registryAccess());
         if (player.fishing != null) {
             if (!level.isClientSide) {
                 int retrieve = player.fishing.retrieve(heldStack);
@@ -96,7 +97,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 //Lure Speed
                 int timeReduction = (int) (EnchantmentHelper.getFishingTimeReduction(serverLevel, heldStack, player) * 20.0F);
                 if (this.tier == AquacultureAPI.MATS.NEPTUNIUM) timeReduction += 1;
-                ItemStack bait = getBait(heldStack);
+                ItemStack bait = getBait(heldStack, level);
                 if (!isAdminRod && !bait.isEmpty()) {
                     timeReduction += ((BaitItem) bait.getItem()).getLureSpeedModifier();
                 }
@@ -105,7 +106,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 int luck = EnchantmentHelper.getFishingLuckBonus(serverLevel, heldStack, player);
                 if (hook != Hooks.EMPTY && hook.getLuckModifier() > 0) luck += hook.getLuckModifier();
 
-                level.addFreshEntity(new AquaFishingBobberEntity(player, level, luck, timeReduction, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack));
+                level.addFreshEntity(new AquaFishingBobberEntity(player, level, luck, timeReduction, hook, getFishingLine(heldStack, level), getBobber(heldStack, level), heldStack));
             }
             player.awardStat(Stats.ITEM_USED.get(this));
             player.gameEvent(GameEvent.ITEM_INTERACT_START);
@@ -124,7 +125,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     }
 
     @Nonnull
-    public static Hook getHookType(@Nonnull ItemStack fishingRod) {
+    public static Hook getHookType(@Nonnull ItemStack fishingRod, HolderLookup.Provider provider) {
         Hook hook = Hooks.EMPTY;
         /*ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ItemHandler.ITEM);
         if (rodHandler != null) {
@@ -136,7 +137,7 @@ public class AquaFishingRodItem extends FishingRodItem {
             }
         }*/
 
-        ItemStack hookStack = getHandler(fishingRod).getStackInSlot(0);
+        ItemStack hookStack = getHandler(fishingRod, provider).getStackInSlot(0);
         if (hookStack.getItem() instanceof HookItem) {
             hook = ((HookItem) hookStack.getItem()).getHookType();
         }
@@ -144,27 +145,27 @@ public class AquaFishingRodItem extends FishingRodItem {
     }
 
     @Nonnull
-    public static ItemStack getBait(@Nonnull ItemStack fishingRod) {
-        return getHandler(fishingRod).getStackInSlot(1);
+    public static ItemStack getBait(@Nonnull ItemStack fishingRod, Level level) {
+        return getHandler(fishingRod, level.registryAccess()).getStackInSlot(1);
     }
 
     @Nonnull
-    public static ItemStack getFishingLine(@Nonnull ItemStack fishingRod) {
-        return getHandler(fishingRod).getStackInSlot(2);
+    public static ItemStack getFishingLine(@Nonnull ItemStack fishingRod, Level level) {
+        return getHandler(fishingRod, level.registryAccess()).getStackInSlot(2);
     }
 
     @Nonnull
-    public static ItemStack getBobber(@Nonnull ItemStack fishingRod) {
-        return getHandler(fishingRod).getStackInSlot(3);
+    public static ItemStack getBobber(@Nonnull ItemStack fishingRod, Level level) {
+        return getHandler(fishingRod, level.registryAccess()).getStackInSlot(3);
     }
 
-    public static ItemStackHandler getHandler(@Nonnull ItemStack fishingRod) {
+    public static ItemStackHandler getHandler(@Nonnull ItemStack fishingRod, HolderLookup.Provider provider) {
         ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ItemHandler.ITEM);
         if (rodHandler == null) {
             rodHandler = FishingRodEquipmentHandler.EMPTY;
         } else {
             if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
-                rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
+                rodHandler.deserializeNBT(provider, fishingRod.getTag().getCompound("Inventory")); //Reload
             }
         }
         return rodHandler;
@@ -178,7 +179,7 @@ public class AquaFishingRodItem extends FishingRodItem {
             tooltips.add(broken.withStyle(broken.getStyle().withItalic(true).withColor(ChatFormatting.GRAY)));
         }
 
-        Hook hook = getHookType(stack);
+        Hook hook = getHookType(stack, tooltipContext.registries());
         if (hook != Hooks.EMPTY) {
             MutableComponent hookColor = Component.translatable(hook.getItem().getDescriptionId());
             tooltips.add(hookColor.withStyle(hookColor.getStyle().withColor(hook.getColor())));

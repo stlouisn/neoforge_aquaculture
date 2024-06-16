@@ -66,7 +66,6 @@ public class Aquaculture {
     private void setupCommon(FMLCommonSetupEvent event) {
         event.enqueueWork(Hooks::load);
         event.enqueueWork(FishWeightHandler::registerFishData);
-        event.enqueueWork(WormFarmBlock::addCompostables);
     }
 
     private void setupClient(FMLClientSetupEvent event) {
@@ -77,6 +76,7 @@ public class Aquaculture {
         AquaBlocks.BLOCK_DEFERRED.register(modBus);
         AquaArmorMaterials.ARMOR_MATERIAL_DEFERRED.register(modBus);
         AquaItems.ITEM_DEFERRED.register(modBus);
+        AquaDataComponents.DATA_COMPONENT_TYPE_DEFERRED.register(modBus);
         CREATIVE_TABS.register(modBus);
         AquaBlockEntities.BLOCK_ENTITY_DEFERRED.register(modBus);
         AquaEntities.ENTITY_DEFERRED.register(modBus);

@@ -24,12 +24,12 @@ public class NeptuniumBow extends BowItem {
         Entity shooter = arrowEntity.getOwner();
         if (arrowEntity.getType() == EntityType.ARROW) {
             if (shooter instanceof LivingEntity) {
-                return new WaterArrowEntity(arrowEntity.level(), (LivingEntity) shooter, stack.copyWithCount(1));
+                return new WaterArrowEntity(arrowEntity.level(), (LivingEntity) shooter, stack.copyWithCount(1), null); //TODO Test null weapon
             }
         }
         if (arrowEntity.getType() == EntityType.SPECTRAL_ARROW) {
             if (shooter instanceof LivingEntity) {
-                return new SpectralWaterArrowEntity(arrowEntity.level(), (LivingEntity) shooter, stack.copyWithCount(1));
+                return new SpectralWaterArrowEntity(arrowEntity.level(), (LivingEntity) shooter, stack.copyWithCount(1), null);
             }
         }
         return super.customArrow(arrowEntity, stack);

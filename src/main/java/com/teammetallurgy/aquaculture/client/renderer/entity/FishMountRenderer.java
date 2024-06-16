@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
+import com.teammetallurgy.aquaculture.init.AquaDataComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
@@ -118,8 +119,9 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         super.renderNameTag(fishMount, fishMount.entity.getDisplayName(), matrixStack, buffer, i, partialTick);
 
         ItemStack stack = fishMount.getDisplayedItem();
-        if (stack.hasTag() && stack.getTag() != null && stack.getTag().contains("fishWeight")) {
-            double weight = stack.getTag().getDouble("fishWeight");
+        Float fishWeight = stack.get(AquaDataComponents.FISH_WEIGHT.get());
+        if (stack.has(AquaDataComponents.FISH_WEIGHT) && fishWeight != null) { //TODO test
+            float weight = fishWeight;
             String lb = weight == 1.0D ? " lb" : " lbs";
 
             DecimalFormat df = new DecimalFormat("#,###.##");
