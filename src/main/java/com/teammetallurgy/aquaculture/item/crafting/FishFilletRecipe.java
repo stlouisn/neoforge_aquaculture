@@ -34,8 +34,6 @@ public class FishFilletRecipe extends CustomRecipe {
         ItemStack stack = ItemStack.EMPTY;
         List<ItemStack> list = new ArrayList<>();
 
-        System.out.println("Matches");
-
         for (int i = 0; i < craftingInventory.size(); ++i) {
             ItemStack slotStack = craftingInventory.getItem(i);
             if (!slotStack.isEmpty()) {
@@ -57,11 +55,9 @@ public class FishFilletRecipe extends CustomRecipe {
 
     @Override
     @Nonnull
-    public ItemStack assemble(@Nonnull CraftingInput craftingInventory, HolderLookup.Provider provider) {
+    public ItemStack assemble(@Nonnull CraftingInput craftingInventory, @Nonnull HolderLookup.Provider provider) {
         ItemStack fish = ItemStack.EMPTY;
         Item knife = null;
-
-        System.out.println("Test");
 
         for (int i = 0; i < craftingInventory.size(); ++i) {
             ItemStack stackSlot = craftingInventory.getItem(i);
@@ -104,7 +100,7 @@ public class FishFilletRecipe extends CustomRecipe {
             if (stack.is(AquacultureAPI.Tags.KNIVES)) {
                 ItemStack knife = stack.copy();
                 if (!isKnifeNeptunium(knife.getItem())) {
-                    MinecraftServer server = ServerLifecycleHooks.getCurrentServer(); //Workaround //TODO test
+                    MinecraftServer server = ServerLifecycleHooks.getCurrentServer(); //Workaround
                     if (server != null) {
                         knife.hurtAndBreak(1, server.overworld(), null, item -> {
                             knife.shrink(1);
