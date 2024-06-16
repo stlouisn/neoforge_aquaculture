@@ -7,7 +7,6 @@ import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.init.AquaDataComponents;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

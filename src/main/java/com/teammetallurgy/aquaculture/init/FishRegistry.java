@@ -7,22 +7,13 @@ import com.teammetallurgy.aquaculture.entity.FishType;
 import com.teammetallurgy.aquaculture.item.AquaFishBucket;
 import com.teammetallurgy.aquaculture.item.FishMountItem;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
-import com.teammetallurgy.aquaculture.misc.StackHelper;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.animal.Ocelot;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -76,12 +67,5 @@ public class FishRegistry {
     public static void registerFishies(RegisterEvent event) {
         if (!event.getRegistryKey().equals(Registries.LOOT_CONDITION_TYPE)) return;
         event.register(Registries.LOOT_CONDITION_TYPE, ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "biome_tag_check"), () -> BiomeTagCheck.BIOME_TAG_CHECK);
-    }
-
-    @SubscribeEvent
-    public static void addFishEntityAttributes(EntityAttributeCreationEvent event) {
-        for (DeferredHolder<EntityType<?>, EntityType<AquaFishEntity>> entityType : fishEntities) {
-            event.put(entityType.get(), AbstractFish.createAttributes().build());
-        }
     }
 }

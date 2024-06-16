@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
@@ -25,9 +24,7 @@ public record BiomeTagPredicate(Optional<PositionPredicate> position, Optional<L
                             PositionPredicate.CODEC.optionalFieldOf("position").forGetter(BiomeTagPredicate::position),
                             Codec.list(TagKey.codec(Registries.BIOME)).optionalFieldOf("include").forGetter(BiomeTagPredicate::include),
                             Codec.list(TagKey.codec(Registries.BIOME)).optionalFieldOf("exclude").forGetter(BiomeTagPredicate::exclude),
-                            Codec.BOOL.optionalFieldOf("and").forGetter(BiomeTagPredicate::and)
-
-                    )
+                            Codec.BOOL.optionalFieldOf("and").forGetter(BiomeTagPredicate::and))
                     .apply(rb, BiomeTagPredicate::new)
     );
     private static final HashMap<CheckType, Set<Holder<Biome>>> CACHE = new HashMap<>();

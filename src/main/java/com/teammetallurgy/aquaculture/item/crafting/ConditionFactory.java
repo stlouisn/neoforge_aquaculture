@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.item.crafting;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;

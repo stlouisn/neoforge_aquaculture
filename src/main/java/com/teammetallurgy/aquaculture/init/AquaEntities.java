@@ -5,11 +5,11 @@ import com.teammetallurgy.aquaculture.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
@@ -64,7 +64,7 @@ public class AquaEntities {
         event.register(STARSHELL_TURTLE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
 
         for (DeferredHolder<EntityType<?>, EntityType<AquaFishEntity>> entityType : FishRegistry.fishEntities) {
-            event.register(entityType.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere, SpawnPlacementRegisterEvent.Operation.AND);
+            event.register(entityType.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
         }
     }
 
@@ -73,5 +73,9 @@ public class AquaEntities {
         event.put(BOX_TURTLE.get(), TurtleLandEntity.createAttributes().build());
         event.put(ARRAU_TURTLE.get(), TurtleLandEntity.createAttributes().build());
         event.put(STARSHELL_TURTLE.get(), TurtleLandEntity.createAttributes().build());
+
+        for (DeferredHolder<EntityType<?>, EntityType<AquaFishEntity>> entityType : FishRegistry.fishEntities) {
+            event.put(entityType.get(), AquaFishEntity.createAttributes().build());
+        }
     }
 }

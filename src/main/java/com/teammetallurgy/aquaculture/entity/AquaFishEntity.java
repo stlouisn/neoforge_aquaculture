@@ -3,19 +3,13 @@ package com.teammetallurgy.aquaculture.entity;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.ai.goal.FollowTypeSchoolLeaderGoal;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
-import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.FollowFlockLeaderGoal;
-import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -105,13 +99,6 @@ public class AquaFishEntity extends AbstractSchoolingFish {
         if (this.leader != null) {
             super.stopFollowing();
         }
-    }
-
-    public static boolean canSpawnHere(EntityType<? extends AbstractFish> fish, LevelAccessor world, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
-        int seaLevel = world.getSeaLevel();
-        int minY = seaLevel - AquaConfig.BASIC_OPTIONS.fishSpawnLevelModifier.get();
-        boolean isAllNeighborsSource = isSourceBlock(world, pos.north()) && isSourceBlock(world, pos.south()) && isSourceBlock(world, pos.west()) && isSourceBlock(world, pos.east());
-        return isSourceBlock(world, pos) && isAllNeighborsSource && pos.getY() >= minY && pos.getY() <= seaLevel;
     }
 
     private static boolean isSourceBlock(LevelAccessor world, BlockPos pos) {

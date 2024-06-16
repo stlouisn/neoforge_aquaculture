@@ -22,7 +22,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nonnull;
-import java.util.function.Supplier;
 
 public class AquaFishBucket extends MobBucketItem {
     private final EntityType<?> fishType;

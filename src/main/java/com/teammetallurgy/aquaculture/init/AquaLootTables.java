@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.init;
 
-import com.mojang.serialization.Codec;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -17,10 +16,7 @@ import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -52,7 +48,7 @@ public class AquaLootTables {
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
-        if (name != null && name.equals(BuiltInLootTables.FISHING)) {
+        if (name != null && name.equals(BuiltInLootTables.FISHING.location())) {
             LootPool pool = event.getTable().getPool("main");
             if (pool != null) {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
