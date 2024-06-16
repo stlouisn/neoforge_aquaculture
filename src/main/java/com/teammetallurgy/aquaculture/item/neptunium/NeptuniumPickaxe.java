@@ -20,7 +20,7 @@ public class NeptuniumPickaxe extends PickaxeItem {
     }
 
     @Override
-    public void inventoryTick(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull Entity entity, int itemSlot, boolean isSelected) { //TODO Test in_Water
+    public void inventoryTick(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
         if (entity instanceof Player player && stack.getItem() == this) {
             stack.set(AquaDataComponents.IN_WATER, player.isEyeInFluid(FluidTags.WATER));
         }

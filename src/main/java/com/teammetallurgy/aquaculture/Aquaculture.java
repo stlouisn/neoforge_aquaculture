@@ -82,7 +82,7 @@ public class Aquaculture {
         AquaEntities.ENTITY_DEFERRED.register(modBus);
         AquaSounds.SOUND_EVENT_DEFERRED.register(modBus);
         AquaGuis.MENU_DEFERRED.register(modBus);
-        FishFilletRecipe.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
+        AquaRecipeSerializers.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
         AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register(modBus);
         ConditionFactory.CONDITION_CODECS.register(modBus);
     }

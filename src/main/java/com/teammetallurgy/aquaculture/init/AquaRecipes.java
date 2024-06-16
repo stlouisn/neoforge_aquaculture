@@ -10,7 +10,7 @@ import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 public class AquaRecipes {
 
     @SubscribeEvent
-    public static void registerBrewingRecipes(RegisterBrewingRecipesEvent event) { //TODO Check if these two work properly
+    public static void registerBrewingRecipes(RegisterBrewingRecipesEvent event) {
         event.getBuilder().addStartMix(AquaItems.JELLYFISH.get(), Potions.POISON);
         event.getBuilder().addStartMix(AquaItems.LEECH.get(), Potions.HEALING);
     }

@@ -2,7 +2,6 @@ package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import net.minecraft.client.Minecraft;
@@ -21,7 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ToolActions;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -49,7 +47,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             poseStack.pushPose(); //Start Hook/Bobber rendering
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+            //poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
             PoseStack.Pose bobberMatrix = poseStack.last();
             Matrix4f posMatrix = bobberMatrix.pose();
             Matrix3f matrix3f = bobberMatrix.normal();
@@ -59,21 +57,24 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             ItemStack bobberStack = bobber.getBobber();
             float bobberR = 1.0F;
             float bobberG = 1.0F;
-            float bobberB = 1.0F;
+            float bobberB = 0.0F;
+            int bobberColorInt = FastColor.ARGB32.color(193, 38, 38);
             if (!bobberStack.isEmpty()) {
                 if (bobberStack.is(ItemTags.DYEABLE)) {
                     DyedItemColor dyeditemcolor = bobberStack.get(DataComponents.DYED_COLOR);
                     if (dyeditemcolor != null) {
-                    bobberR = FastColor.ARGB32.red(dyeditemcolor.rgb());
-                    bobberG = FastColor.ARGB32.green(dyeditemcolor.rgb());
-                    bobberB = FastColor.ARGB32.blue(dyeditemcolor.rgb());
-                }
+                        bobberColorInt = dyeditemcolor.rgb();
                     }
+                    bobberR = (float) (bobberColorInt >> 16 & 255) / 255.0F;
+                    bobberG = (float) (bobberColorInt >> 8 & 255) / 255.0F;
+                    bobberB = (float) (bobberColorInt & 255) / 255.0F;
+                }
             }
             vertex(bobberOverlayVertex, posMatrix, matrix3f, i, 0.0F, 0, 0, 1, bobberR, bobberG, bobberB);
             vertex(bobberOverlayVertex, posMatrix, matrix3f, i, 1.0F, 0, 1, 1, bobberR, bobberG, bobberB);
             vertex(bobberOverlayVertex, posMatrix, matrix3f, i, 1.0F, 1, 1, 0, bobberR, bobberG, bobberB);
             vertex(bobberOverlayVertex, posMatrix, matrix3f, i, 0.0F, 1, 0, 0, bobberR, bobberG, bobberB);
+
             //Bobber Background
             if (bobber.hasBobber()) {
                 VertexConsumer bobberVertex = buffer.getBuffer(BOBBER_RENDER);
@@ -91,46 +92,13 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
 
             poseStack.popPose(); //End Hook/Bobber rendering
 
-            int hand = angler.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
-            ItemStack heldMain = angler.getMainHandItem();
-            if (!heldMain.canPerformAction(ToolActions.FISHING_ROD_CAST)) {
-                hand = -hand;
-            }
-
             float swingProgress = angler.getAttackAnim(partialTicks);
             float swingProgressSqrt = Mth.sin(Mth.sqrt(swingProgress) * (float) Math.PI);
-            float yawOffset = Mth.lerp(partialTicks, angler.yBodyRotO, angler.yBodyRot) * 0.017453292F;
-            double sin = Mth.sin(yawOffset);
-            double cos = Mth.cos(yawOffset);
-            double handOffset = (double) hand * 0.35D;
-            double anglerX;
-            double anglerY;
-            double anglerZ;
-            float anglerEye;
-            double fov;
-            if ((this.entityRenderDispatcher.options == null || this.entityRenderDispatcher.options.getCameraType().isFirstPerson()) && angler == Minecraft.getInstance().player) {
-                fov = 960.0D / this.entityRenderDispatcher.options.fov().get();
-                Vec3 rod = this.entityRenderDispatcher.camera.getNearPlane().getPointOnPlane((float) hand * 0.525F, -0.1F);
-                rod = rod.scale(fov);
-                rod = rod.yRot(swingProgressSqrt * 0.5F);
-                rod = rod.xRot(-swingProgressSqrt * 0.7F);
-                anglerX = Mth.lerp(partialTicks, angler.xo, angler.getX()) + rod.x;
-                anglerY = Mth.lerp(partialTicks, angler.yo, angler.getY()) + rod.y;
-                anglerZ = Mth.lerp(partialTicks, angler.zo, angler.getZ()) + rod.z;
-                anglerEye = angler.getEyeHeight();
-            } else {
-                anglerX = Mth.lerp(partialTicks, angler.xo, angler.getX()) - cos * handOffset - sin * 0.8D;
-                anglerY = angler.yo + (double) angler.getEyeHeight() + (angler.getY() - angler.yo) * (double) partialTicks - 0.45D;
-                anglerZ = Mth.lerp(partialTicks, angler.zo, angler.getZ()) - sin * handOffset + cos * 0.8D;
-                anglerEye = angler.isCrouching() ? -0.1875F : 0.0F;
-            }
-
-            fov = Mth.lerp(partialTicks, bobber.xo, bobber.getX());
-            double bobberY = Mth.lerp(partialTicks, bobber.yo, bobber.getY()) + 0.25D;
-            double bobberZ = Mth.lerp(partialTicks, bobber.zo, bobber.getZ());
-            float startX = (float) (anglerX - fov);
-            float startY = (float) (anglerY - bobberY) + anglerEye;
-            float startZ = (float) (anglerZ - bobberZ);
+            Vec3 playerHandPos = this.getPlayerHandPos(angler, swingProgressSqrt, partialTicks);
+            Vec3 entityPos = bobber.getPosition(partialTicks).add(0.0, 0.25, 0.0);
+            float x = (float) (playerHandPos.x - entityPos.x);
+            float y = (float) (playerHandPos.y - entityPos.y);
+            float z = (float) (playerHandPos.z - entityPos.z);
             VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.lineStrip());
             PoseStack.Pose pose = poseStack.last();
 
@@ -142,13 +110,14 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             if (!line.isEmpty()) {
                 DyedItemColor dyeditemcolor = line.get(DataComponents.DYED_COLOR);
                 if (dyeditemcolor != null) {
-                    r = FastColor.ARGB32.red(dyeditemcolor.rgb());
-                    g = FastColor.ARGB32.green(dyeditemcolor.rgb());
-                    b = FastColor.ARGB32.blue(dyeditemcolor.rgb());
+                    int colorInt = dyeditemcolor.rgb();
+                    r = (float) (colorInt >> 16 & 255) / 255.0F;
+                    g = (float) (colorInt >> 8 & 255) / 255.0F;
+                    b = (float) (colorInt & 255) / 255.0F;
                 }
             }
             for (int size = 0; size < 16; ++size) {
-                stringVertex(startX, startY, startZ, vertexConsumer, pose, fraction(size, 15), fraction(size + 1, 16), r, g, b);
+                stringVertex(x, y, z, vertexConsumer, pose, fraction(size, 15), fraction(size + 1, 16), r, g, b);
             }
             poseStack.popPose();
             super.render(bobber, entityYaw, partialTicks, poseStack, buffer, i);
@@ -185,5 +154,34 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
 
     private static float fraction(int value1, int value2) {
         return (float) value1 / (float) value2;
+    }
+
+    private Vec3 getPlayerHandPos(Player player, float swingProgressSqrt, float partialTicks) { //Copied from FishingHookRenderer
+        int i = player.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
+        ItemStack itemstack = player.getMainHandItem();
+        if (!itemstack.canPerformAction(net.neoforged.neoforge.common.ToolActions.FISHING_ROD_CAST)) {
+            i = -i;
+        }
+
+        if (this.entityRenderDispatcher.options.getCameraType().isFirstPerson() && player == Minecraft.getInstance().player) {
+            double d4 = 960.0 / (double) this.entityRenderDispatcher.options.fov().get().intValue();
+            Vec3 vec3 = this.entityRenderDispatcher
+                    .camera
+                    .getNearPlane()
+                    .getPointOnPlane((float) i * 0.525F, -0.1F)
+                    .scale(d4)
+                    .yRot(swingProgressSqrt * 0.5F)
+                    .xRot(-swingProgressSqrt * 0.7F);
+            return player.getEyePosition(partialTicks).add(vec3);
+        } else {
+            float f = Mth.lerp(partialTicks, player.yBodyRotO, player.yBodyRot) * (float) (Math.PI / 180.0);
+            double d0 = Mth.sin(f);
+            double d1 = Mth.cos(f);
+            float f1 = player.getScale();
+            double d2 = (double) i * 0.35 * (double) f1;
+            double d3 = 0.8 * (double) f1;
+            float f2 = player.isCrouching() ? -0.1875F : 0.0F;
+            return player.getEyePosition(partialTicks).add(-d1 * d2 - d0 * d3, (double) f2 - 0.45 * (double) f1, -d0 * d2 + d1 * d3);
+        }
     }
 }

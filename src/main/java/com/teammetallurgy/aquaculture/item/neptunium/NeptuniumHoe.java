@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class NeptuniumHoe extends HoeItem { //TODO Test
+public class NeptuniumHoe extends HoeItem {
 
     public NeptuniumHoe(Tier tier, int damage, float speed) {
         super(tier, new Item.Properties().attributes(HoeItem.createAttributes(tier, damage, speed)));

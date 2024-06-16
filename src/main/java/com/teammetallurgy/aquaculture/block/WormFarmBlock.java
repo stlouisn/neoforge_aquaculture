@@ -1,21 +1,19 @@
 package com.teammetallurgy.aquaculture.block;
 
 import com.mojang.serialization.MapCodec;
-import com.teammetallurgy.aquaculture.api.AquacultureAPI;
-import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
-import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.*;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -50,7 +48,7 @@ public class WormFarmBlock extends ComposterBlock {
         int stateLevel = state.getValue(LEVEL);
         ItemStack heldStack = player.getItemInHand(hand);
 
-        if (heldStack.getItemHolder().getData(NeoForgeDataMaps.COMPOSTABLES) != null) { //TODO Test
+        if (heldStack.getItemHolder().getData(NeoForgeDataMaps.COMPOSTABLES) != null) {
             if (stateLevel < 8 && !level.isClientSide) {
                 boolean addItem = WormFarmBlock.addItem(state, level, pos, heldStack);
                 level.levelEvent(1500, pos, addItem ? 1 : 0);
@@ -82,7 +80,7 @@ public class WormFarmBlock extends ComposterBlock {
     
     private static boolean addItem(BlockState state, LevelAccessor level, BlockPos pos, @Nonnull ItemStack stack) {
         int stateLevel = state.getValue(LEVEL);
-        float chance = COMPOSTABLES.getFloat(stack.getItem());
+        float chance = ComposterBlock.getValue(stack);
         if ((stateLevel != 0 || chance <= 0.0F) && level.getRandom().nextDouble() >= (double) chance) {
             return false;
         } else {
@@ -132,7 +130,7 @@ public class WormFarmBlock extends ComposterBlock {
 
         @Override
         public boolean canPlaceItemThroughFace(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
-            return !this.inserted && direction == Direction.UP && ComposterBlock.COMPOSTABLES.containsKey(stack.getItem());
+            return !this.inserted && direction == Direction.UP && ComposterBlock.getValue(stack) > 0;
         }
 
         @Override
