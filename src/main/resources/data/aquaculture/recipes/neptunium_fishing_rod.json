@@ -13,13 +13,13 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:string"
+      "tag": "c:string"
     },
     "T": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     },
     "N": {
-      "tag": "forge:ingots/neptunium"
+      "tag": "c:ingots/neptunium"
     }	
   },
   "result": {

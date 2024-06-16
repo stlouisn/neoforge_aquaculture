@@ -4,10 +4,11 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
+import com.teammetallurgy.aquaculture.init.AquaDataComponents;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
@@ -21,6 +22,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -81,7 +83,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 if (!isAdminRod) {
                     if (hook != Hooks.EMPTY && hook.getDurabilityChance() > 0) {
                         if (level.random.nextDouble() >= hook.getDurabilityChance()) {
-                                heldStack.hurtAndBreak(retrieve, player, LivingEntity.getSlotForHand(hand));
+                            heldStack.hurtAndBreak(retrieve, player, LivingEntity.getSlotForHand(hand));
                         }
                     } else {
                         heldStack.hurtAndBreak(retrieve, player, LivingEntity.getSlotForHand(hand));
@@ -164,8 +166,11 @@ public class AquaFishingRodItem extends FishingRodItem {
         if (rodHandler == null) {
             rodHandler = FishingRodEquipmentHandler.EMPTY;
         } else {
-            if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
-                rodHandler.deserializeNBT(provider, fishingRod.getTag().getCompound("Inventory")); //Reload
+            ItemContainerContents rodInventory = fishingRod.get(AquaDataComponents.ROD_INVENTORY);
+            if (!fishingRod.isEmpty() && rodInventory != null && fishingRod.has(AquaDataComponents.ROD_INVENTORY)) {
+                for (int slot = 0; slot < rodInventory.getSlots(); slot++) {
+                    rodHandler.setStackInSlot(slot, rodInventory.getStackInSlot(slot)); //Reload
+                }
             }
         }
         return rodHandler;
@@ -213,10 +218,16 @@ public class AquaFishingRodItem extends FishingRodItem {
         }
 
         @Override
-        protected void onContentsChanged(int slot) {
-            CompoundTag tag = this.stack.getOrCreateTag();
-            tag.put("Inventory", this.serializeNBT());
-            this.stack.setTag(tag);
+        protected void onContentsChanged(int slot) { //TODO Test
+            ItemContainerContents rodInventory = stack.get(AquaDataComponents.ROD_INVENTORY);
+            if (!stack.isEmpty() && rodInventory != null && stack.has(AquaDataComponents.ROD_INVENTORY)) {
+                NonNullList<ItemStack> list = NonNullList.create();
+                for (int i = 0; i < getSlots(); i++) {
+                    list.add(getStackInSlot(i));
+                }
+
+                stack.set(AquaDataComponents.ROD_INVENTORY, ItemContainerContents.fromItems(list));
+            }
         }
     }
 }

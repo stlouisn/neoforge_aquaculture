@@ -33,12 +33,12 @@ import java.math.MathContext;
 import java.text.DecimalFormat;
 
 public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
-    public static final ModelResourceLocation OAK = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "oak_fish_mount"), "");
-    public static final ModelResourceLocation SPRUCE = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "spruce_fish_mount"), "");
-    public static final ModelResourceLocation BIRCH = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "birch_fish_mount"), "");
-    public static final ModelResourceLocation JUNGLE = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "jungle_fish_mount"), "");
-    public static final ModelResourceLocation ACACIA = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "acacia_fish_mount"), "");
-    public static final ModelResourceLocation DARK_OAK = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "dark_oak_fish_mount"), "");
+    public static final ModelResourceLocation OAK = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/oak_fish_mount"));
+    public static final ModelResourceLocation SPRUCE = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/spruce_fish_mount"));
+    public static final ModelResourceLocation BIRCH = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/birch_fish_mount"));
+    public static final ModelResourceLocation JUNGLE = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/jungle_fish_mount"));
+    public static final ModelResourceLocation ACACIA = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/acacia_fish_mount"));
+    public static final ModelResourceLocation DARK_OAK = ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/dark_oak_fish_mount"));
     private final Minecraft mc = Minecraft.getInstance();
 
     public FishMountRenderer(EntityRendererProvider.Context context) {

@@ -48,6 +48,6 @@ public class AquaArmorMaterials {
 
         List<ArmorMaterial.Layer> list = List.of(new ArmorMaterial.Layer(location));
 
-        return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, location, new ArmorMaterial(armorTypeMap, enchantmentValue, equipSound, repairIngredient, list, toughness, knockbackResistance));
+        return ARMOR_MATERIAL_DEFERRED.register(name, () -> new ArmorMaterial(armorTypeMap, enchantmentValue, equipSound, repairIngredient, list, toughness, knockbackResistance));
     }
 }

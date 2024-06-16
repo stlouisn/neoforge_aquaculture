@@ -7,13 +7,13 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:string"
+      "tag": "c:string"
     },
     "T": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     },
     "I": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     }	
   },
   "result": {

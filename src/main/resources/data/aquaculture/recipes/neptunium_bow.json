@@ -13,10 +13,10 @@
   ],
   "key": {
     "N": {
-      "tag": "forge:ingots/neptunium"
+      "tag": "c:ingots/neptunium"
     },
     "S": {
-      "tag": "forge:string"
+      "tag": "c:string"
     }
   },
   "result": {
