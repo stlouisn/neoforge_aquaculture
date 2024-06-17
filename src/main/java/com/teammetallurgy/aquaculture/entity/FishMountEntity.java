@@ -45,7 +45,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class FishMountEntity extends HangingEntity implements IEntityWithComplexSpawn { //TODO Test. Probably not working as intended
+public class FishMountEntity extends HangingEntity implements IEntityWithComplexSpawn {
     private static final Logger PRIVATE_LOGGER = LogManager.getLogger();
     private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(FishMountEntity.class, EntityDataSerializers.ITEM_STACK);
     private float itemDropChance = 1.0F;
@@ -92,12 +92,12 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
 
     @Override
     @Nonnull
-    protected AABB calculateBoundingBox(@Nonnull BlockPos pos, @Nonnull Direction direction) { //TODO Needs to be redone most likely, but works for getting entity to place
+    protected AABB calculateBoundingBox(@Nonnull BlockPos pos, @Nonnull Direction direction) {
         Vec3 vec3 = Vec3.atCenterOf(pos).relative(direction, -0.46875);
         Direction.Axis axis = direction.getAxis();
-        double x = axis == Direction.Axis.X ? 0.0625 : 0.5;
+        double x = axis == Direction.Axis.X ? 0.0625 : 0.75;
         double y = axis == Direction.Axis.Y ? 0.0625 : 0.5;
-        double z = axis == Direction.Axis.Z ? 0.0625 : 0.5;
+        double z = axis == Direction.Axis.Z ? 0.0625 : 0.75;
 
         return AABB.ofSize(vec3, x, y, z);
     }

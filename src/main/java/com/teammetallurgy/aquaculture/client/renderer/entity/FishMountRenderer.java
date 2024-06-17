@@ -55,9 +55,9 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
 
         matrixStack.pushPose();
         matrixStack.translate(-0.5D, -0.5D, -0.5D);
-        ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(fishMount.getType());
-        if (id != null) {
-            ModelResourceLocation location = new ModelResourceLocation(id, ""); //Calling this instead of the fields for mod support'
+        ResourceLocation entityTypeID = BuiltInRegistries.ENTITY_TYPE.getKey(fishMount.getType());
+        if (entityTypeID != null) {
+            ModelResourceLocation location = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/" + entityTypeID.getPath()), "standalone"); //Calling this instead of the fields for mod support'
             rendererDispatcher.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()), null, manager.getModel(location), 1.0F, 1.0F, 1.0F, i, OverlayTexture.NO_OVERLAY);
         }
         matrixStack.popPose();
