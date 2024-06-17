@@ -31,6 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DiodeBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -115,6 +116,7 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
         } else if (!source.is(DamageTypeTags.IS_EXPLOSION) && !this.getDisplayedItem().isEmpty()) {
             if (!this.level().isClientSide) {
                 this.dropItemOrSelf(source.getEntity(), false);
+                this.gameEvent(GameEvent.BLOCK_CHANGE, source.getEntity());
                 this.playSound(AquaSounds.FISH_MOUNT_REMOVED.get(), 1.0F, 1.0F);
             }
             return true;
@@ -135,6 +137,7 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
     public void dropItem(@Nullable Entity brokenEntity) {
         this.playSound(AquaSounds.FISH_MOUNT_BROKEN.get(), 1.0F, 1.0F);
         this.dropItemOrSelf(brokenEntity, true);
+        this.gameEvent(GameEvent.BLOCK_CHANGE, entity);
     }
 
     @Override
@@ -143,29 +146,26 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
     }
 
     private void dropItemOrSelf(@Nullable Entity entity, boolean shouldDropSelf) {
+        ItemStack displayedStack = this.getDisplayedItem();
+        this.setDisplayedItem(ItemStack.EMPTY);
         if (!this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             if (entity == null) {
                 this.setDisplayedItem(ItemStack.EMPTY);
             }
-
         } else {
-            ItemStack displayStack = this.getDisplayedItem();
-            this.setDisplayedItem(ItemStack.EMPTY);
-            if (entity instanceof Player player) {
-                if (player.getAbilities().instabuild) {
-                    this.setDisplayedItem(ItemStack.EMPTY);
-                    return;
-                }
+            if (entity instanceof Player player && player.hasInfiniteMaterials()) {
+                this.setDisplayedItem(ItemStack.EMPTY);
+                return;
             }
 
             if (shouldDropSelf) {
                 this.spawnAtLocation(this.getItem());
             }
 
-            if (!displayStack.isEmpty()) {
-                displayStack = displayStack.copy();
+            if (!displayedStack.isEmpty()) {
+                displayedStack = displayedStack.copy();
                 if (this.random.nextFloat() < this.itemDropChance) {
-                    this.spawnAtLocation(displayStack);
+                    this.spawnAtLocation(displayedStack);
                 }
             }
         }
@@ -190,8 +190,7 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
 
     public void setDisplayedItemWithUpdate(@Nonnull ItemStack stack, boolean shouldUpdate) {
         if (!stack.isEmpty()) {
-            stack = stack.copy();
-            stack.setCount(1);
+            stack = stack.copyWithCount(1);
         }
 
         this.getEntityData().set(ITEM, stack);
@@ -232,19 +231,22 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        CompoundTag nbt = compound.getCompound("Item");
-        if (nbt != null && !nbt.isEmpty()) {
-            ItemStack nbtStack = ItemStack.parseOptional(this.registryAccess(), compound);
-            if (nbtStack.isEmpty()) {
-                PRIVATE_LOGGER.warn("Unable to load item from: {}", nbt);
-            }
+        ItemStack stack;
 
-            ItemStack displayStack = this.getDisplayedItem();
-            if (!displayStack.isEmpty() && !ItemStack.matches(nbtStack, displayStack)) {
-                this.setDisplayedItem(ItemStack.EMPTY);
-            }
+        if (compound.contains("Item", 10)) {
+            CompoundTag nbt = compound.getCompound("Item");
+            stack = ItemStack.parse(this.registryAccess(), nbt).orElse(ItemStack.EMPTY);
+        } else {
+            stack = ItemStack.EMPTY;
+        }
 
-            this.setDisplayedItemWithUpdate(nbtStack, false);
+        ItemStack displayStack = this.getDisplayedItem();
+        if (!displayStack.isEmpty() && !ItemStack.matches(stack, displayStack)) {
+            this.setDisplayedItem(displayStack);
+        }
+
+        this.setDisplayedItemWithUpdate(stack, false);
+        if (!stack.isEmpty()) {
             if (compound.contains("ItemDropChance", 99)) {
                 this.itemDropChance = compound.getFloat("ItemDropChance");
             }
@@ -285,7 +287,7 @@ public class FishMountEntity extends HangingEntity implements IEntityWithComplex
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
+    public ItemStack getPickedResult(@Nonnull HitResult target) {
         return !this.getDisplayedItem().isEmpty() ? this.getDisplayedItem() : new ItemStack(this.getItem());
     }
 
