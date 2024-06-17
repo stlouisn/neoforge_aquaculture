@@ -5,7 +5,6 @@ import com.teammetallurgy.aquaculture.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;

@@ -1,4 +1,3 @@
-/*
 package com.teammetallurgy.aquaculture.integration.jei;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
@@ -18,7 +17,7 @@ public class JEIIntegration implements IModPlugin {
     @Override
     @Nonnull
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(Aquaculture.MOD_ID, "jei_support");
+        return ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "jei_support");
     }
 
     @Override
@@ -28,4 +27,4 @@ public class JEIIntegration implements IModPlugin {
             registration.addRecipes(RecipeTypes.CRAFTING, FilletKnifeRecipeMaker.createFilletKnifeRecipes());
         }
     }
-}*/
+}

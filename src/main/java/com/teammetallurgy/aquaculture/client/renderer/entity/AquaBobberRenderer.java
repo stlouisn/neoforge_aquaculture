@@ -47,7 +47,6 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             poseStack.pushPose(); //Start Hook/Bobber rendering
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-            //poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
             PoseStack.Pose bobberMatrix = poseStack.last();
             Matrix4f posMatrix = bobberMatrix.pose();
             Matrix3f matrix3f = bobberMatrix.normal();
@@ -57,7 +56,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             ItemStack bobberStack = bobber.getBobber();
             float bobberR = 1.0F;
             float bobberG = 1.0F;
-            float bobberB = 0.0F;
+            float bobberB = 1.0F;
             int bobberColorInt = FastColor.ARGB32.color(193, 38, 38);
             if (!bobberStack.isEmpty()) {
                 if (bobberStack.is(ItemTags.DYEABLE)) {
