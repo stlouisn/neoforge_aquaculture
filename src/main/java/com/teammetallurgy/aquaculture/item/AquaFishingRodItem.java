@@ -99,10 +99,8 @@ public class AquaFishingRodItem extends FishingRodItem {
                 int lureSpeed = (int) (EnchantmentHelper.getFishingTimeReduction(serverLevel, heldStack, player) * 20.0F);
                 if (this.tier == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 100;
                 ItemStack bait = getBait(heldStack);
-                System.out.println("LURE SPEED: " + lureSpeed);
                 if (!isAdminRod && !bait.isEmpty()) {
                     lureSpeed += (((BaitItem) bait.getItem()).getLureSpeedModifier() * 100);
-                    System.out.println("Lure Speed with bait: " + lureSpeed);
                 }
                 lureSpeed = Math.min(500, lureSpeed);
 
