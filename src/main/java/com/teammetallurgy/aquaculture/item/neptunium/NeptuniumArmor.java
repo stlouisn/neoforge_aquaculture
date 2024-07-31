@@ -44,9 +44,7 @@ public class NeptuniumArmor extends ArmorItem {
                 } else if (this.getType() == Type.CHESTPLATE) {
                     player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20, 0, false, false, false));
                 } else if (this.getType() == Type.LEGGINGS) {
-                    if (!player.isCrouching() && !player.jumping && !player.isSwimming()) {
-                        player.setDeltaMovement(Vec3.ZERO);
-                    }
+                    player.setNoGravity(!player.isCrouching() && !player.jumping && !player.isSwimming() && !player.isSpectator());
                 }
             }
         }
