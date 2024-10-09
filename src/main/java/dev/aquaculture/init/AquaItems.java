@@ -6,7 +6,6 @@ import dev.aquaculture.api.fishing.Hooks;
 import dev.aquaculture.entity.FishType;
 import dev.aquaculture.item.AquaFishingRodItem;
 import dev.aquaculture.item.FishItem;
-import dev.aquaculture.item.ItemMessageInABottle;
 import dev.aquaculture.item.SimpleItem;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public class AquaItems {
     public static final DeferredRegister.Items ITEM_DEFERRED = DeferredRegister.createItems(Aquaculture.MOD_ID);
     public static final Collection<DeferredItem<Item>> ITEMS_FOR_TAB_LIST = new ArrayList<>();
@@ -26,14 +26,13 @@ public class AquaItems {
     public static final DeferredItem<Item> IRON_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.IRON, new Item.Properties().durability(125)), "iron_fishing_rod");
     public static final DeferredItem<Item> GOLD_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.GOLD, new Item.Properties().durability(55)), "gold_fishing_rod");
     public static final DeferredItem<Item> DIAMOND_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.DIAMOND, new Item.Properties().durability(450)), "diamond_fishing_rod");
-    public static final DeferredItem<Item> WORM = registerWithTab(() -> AquacultureAPI.createBait(20, 1), "worm");
+    public static final DeferredItem<Item> WORM = registerWithTab(() -> AquacultureAPI.createBait(0.07, 1), "worm");
     public static final DeferredItem<Item> FISHING_LINE = registerWithTab(SimpleItem::new, "fishing_line");
     public static final DeferredItem<Item> BOBBER = registerWithTab(SimpleItem::new, "bobber");
 
     // Misc
     public static final DeferredItem<Item> DRIFTWOOD = registerWithTab(SimpleItem::new, "driftwood");
     public static final DeferredItem<Item> TIN_CAN = registerWithTab(SimpleItem::new, "tin_can");
-    public static final DeferredItem<Item> NESSAGE_IN_A_BOTTLE = registerWithTab(ItemMessageInABottle::new, "message_in_a_bottle");
     public static final DeferredItem<Item> FISH_BONES = registerWithTab(SimpleItem::new, "fish_bones");
 
     // Food
@@ -41,11 +40,11 @@ public class AquaItems {
     public static final DeferredItem<Item> COOKED_FILLET = registerWithTab(() -> new Item(new Item.Properties().food(AquaFoods.FISH_FILLET)), "fish_fillet_cooked");
 
     // Fish
-    public static final DeferredItem<Item> ATLANTIC_COD = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "atlantic_cod");
+    public static final DeferredItem<Item> COD = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "cod");
     public static final DeferredItem<Item> BLACKFISH = FishRegistry.register(FishItem::new, "blackfish");
     public static final DeferredItem<Item> PACIFIC_HALIBUT = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "pacific_halibut", FishType.HALIBUT);
     public static final DeferredItem<Item> ATLANTIC_HALIBUT = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "atlantic_halibut", FishType.HALIBUT);
-    public static final DeferredItem<Item> ATLANTIC_HERRING = FishRegistry.register(() -> new FishItem(FishItem.SMALL_FISH_RAW), "atlantic_herring", FishType.SMALL);
+    public static final DeferredItem<Item> HERRING = FishRegistry.register(() -> new FishItem(FishItem.SMALL_FISH_RAW), "herring", FishType.SMALL);
     public static final DeferredItem<Item> PINK_SALMON = FishRegistry.register(FishItem::new, "pink_salmon");
     public static final DeferredItem<Item> POLLOCK = FishRegistry.register(FishItem::new, "pollock");
     public static final DeferredItem<Item> RAINBOW_TROUT = FishRegistry.register(FishItem::new, "rainbow_trout");
@@ -69,8 +68,7 @@ public class AquaItems {
     public static final DeferredItem<Item> JELLYFISH = FishRegistry.register(SimpleItem::new, "jellyfish", FishType.JELLYFISH);
     public static final DeferredItem<Item> RED_GROUPER = FishRegistry.register(FishItem::new, "red_grouper");
     public static final DeferredItem<Item> TUNA = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "tuna", FishType.LARGE);
-    public static final DeferredItem<Item> LEECH = registerWithTab(() -> AquacultureAPI.createBait(30, 1), "leech");
-    public static final DeferredItem<Item> GOLDFISH = registerWithTab(SimpleItem::new, "goldfish");
+    public static final DeferredItem<Item> LEECH = registerWithTab(() -> AquacultureAPI.createBait(0.04, 1), "leech");
 
     //Fish Mounting
     public static final DeferredItem<Item> OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("oak_fish_mount");

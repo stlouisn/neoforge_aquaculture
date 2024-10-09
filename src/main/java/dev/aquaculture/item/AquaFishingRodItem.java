@@ -35,6 +35,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class AquaFishingRodItem extends FishingRodItem {
+
     private final Tier tier;
     private final int enchantability;
 

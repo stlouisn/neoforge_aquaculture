@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
 
-public class FishLargeModel<T extends Entity> extends ListModel<T> { //Based on cod
+public class FishLargeModel<T extends Entity> extends ListModel<T> {
     private final ModelPart head;
     private final ModelPart topFin;
     private final ModelPart tail;

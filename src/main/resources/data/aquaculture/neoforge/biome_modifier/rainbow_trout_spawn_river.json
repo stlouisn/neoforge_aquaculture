@@ -4,7 +4,7 @@
     "type": "aquaculture:rainbow_trout",
     "weight": 6,
     "minCount": 2,
-    "maxCount": 4
+    "maxCount": 3
   },
   "includeBiomes": ["#c:is_river"],
   "excludeBiomes": ["#c:is_hot"],

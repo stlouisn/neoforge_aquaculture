@@ -22,6 +22,7 @@ import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 public class AquaFishEntity extends AbstractSchoolingFish {
     private final FishType fishType;
@@ -39,7 +40,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.availableGoals.forEach(prioritizedGoal -> { //Removes vanilla schooling goal
+        this.goalSelector.availableGoals.forEach(prioritizedGoal -> {
             if (prioritizedGoal.getGoal().getClass() == FollowFlockLeaderGoal.class) {
                 this.goalSelector.removeGoal(prioritizedGoal.getGoal());
             }
@@ -48,7 +49,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
+    public ItemStack getPickedResult(@NotNull HitResult target) {
         return this.getBucketItemStack();
     }
 

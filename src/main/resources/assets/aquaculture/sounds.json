@@ -17,15 +17,6 @@
 		],
 		"subtitle": "aquaculture.subtitles.tackle_box_close"
 	},
-	"worm_farm_empty": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:block.composter.empty"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.worm_farm_empty"
-	},
 	"fish_mount_removed": {
 		"sounds": [
 			{
@@ -61,15 +52,6 @@
 			}
 		],
 		"subtitle": "aquaculture.subtitles.fish_mount_add_item"
-	},
-	"bobber_bait": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:item.trident.hit_ground"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.bobber_bait"
 	},
 	"bobber_land_lava": {
 		"sounds": [
@@ -130,14 +112,5 @@
 			}
 		],
 		"subtitle": "aquaculture.subtitles.fish_collide"
-	},
-	"bottle_open": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:block.glass.break"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.bottle_open"
 	}
 }

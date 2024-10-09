@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:synodontis",
+    "weight": 20,
+    "minCount": 1,
+    "maxCount": 4
+  },
+  "includeBiomes": ["#c:is_dry"],
+  "excludeBiomes": ["#c:is_cold"],
+  "and": false
+}

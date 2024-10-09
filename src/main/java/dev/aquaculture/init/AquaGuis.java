@@ -18,9 +18,9 @@ public class AquaGuis {
     public static final DeferredHolder<MenuType<?>, MenuType<TackleBoxContainer>> TACKLE_BOX = register(() -> IMenuTypeExtension.create((windowID, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         return new TackleBoxContainer(windowID, pos, inv);
-    }), "tackle_box");
+    }));
 
-    private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> register(@Nonnull Supplier<MenuType<T>> initializer, @Nonnull String name) {
-        return MENU_DEFERRED.register(name, initializer);
+    private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> register(@Nonnull Supplier<MenuType<T>> initializer) {
+        return MENU_DEFERRED.register("tackle_box", initializer);
     }
 }

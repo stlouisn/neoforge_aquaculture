@@ -45,15 +45,13 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
         Player angler = bobber.getPlayerOwner();
         if (angler != null) {
             poseStack.pushPose();
-            poseStack.pushPose(); //Start Hook/Bobber rendering
+            poseStack.pushPose();
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
             PoseStack.Pose bobberMatrix = poseStack.last();
             Matrix4f posMatrix = bobberMatrix.pose();
             Matrix3f matrix3f = bobberMatrix.normal();
-            //Bobber + Bobber Overlay
             VertexConsumer bobberOverlayVertex = bobber.hasBobber() ? buffer.getBuffer(BOBBER_OVERLAY_RENDER) : buffer.getBuffer(BOBBER_VANILLA_RENDER);
-            //Bobber Overlay
             ItemStack bobberStack = bobber.getBobber();
             float bobberR = 1.0F;
             float bobberG = 1.0F;
@@ -75,7 +73,6 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             vertex(bobberOverlayVertex, posMatrix, matrix3f, i, 1.0F, 1, 1, 0, bobberR, bobberG, bobberB);
             vertex(bobberOverlayVertex, posMatrix, matrix3f, i, 0.0F, 1, 0, 0, bobberR, bobberG, bobberB);
 
-            //Bobber Background
             if (bobber.hasBobber()) {
                 VertexConsumer bobberVertex = buffer.getBuffer(BOBBER_RENDER);
                 renderPosTexture(bobberVertex, posMatrix, matrix3f, i, 0.0F, 0, 0, 1);
@@ -83,14 +80,13 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 renderPosTexture(bobberVertex, posMatrix, matrix3f, i, 1.0F, 1, 1, 0);
                 renderPosTexture(bobberVertex, posMatrix, matrix3f, i, 0.0F, 1, 0, 0);
             }
-            //Hook
             VertexConsumer hookVertex = bobber.hasHook() ? buffer.getBuffer(RenderType.entityCutout(bobber.getHook().getTexture())) : buffer.getBuffer(HOOK_RENDER);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 0.0F, 0, 0, 1);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 1.0F, 0, 1, 1);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 1.0F, 1, 1, 0);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 0.0F, 1, 0, 0);
 
-            poseStack.popPose(); //End Hook/Bobber rendering
+            poseStack.popPose();
 
             float swingProgress = angler.getAttackAnim(partialTicks);
             float swingProgressSqrt = Mth.sin(Mth.sqrt(swingProgress) * (float) Math.PI);
@@ -102,7 +98,6 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.lineStrip());
             PoseStack.Pose pose = poseStack.last();
 
-            //Line color
             ItemStack line = bobber.getFishingLine();
             float r = 0;
             float g = 0;
@@ -158,7 +153,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
         return (float) value1 / (float) value2;
     }
 
-    private Vec3 getPlayerHandPos(Player player, float swingProgressSqrt, float partialTicks) { //Copied from FishingHookRenderer
+    private Vec3 getPlayerHandPos(Player player, float swingProgressSqrt, float partialTicks) {
         int i = player.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
         ItemStack itemstack = player.getMainHandItem();
         if (!itemstack.canPerformAction(ItemAbilities.FISHING_ROD_CAST)) {

@@ -159,6 +159,7 @@ public class Hook {
       return this;
     }
 
+    @SuppressWarnings("unused")
     public HookBuilder setCatchSound(Supplier<SoundEvent> catchSound) {
       this.catchSound = catchSound;
       return this;

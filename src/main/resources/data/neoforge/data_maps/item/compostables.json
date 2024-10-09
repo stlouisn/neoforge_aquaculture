@@ -42,7 +42,7 @@
     "aquaculture:arapaima": {
       "chance": 0.5
     },
-    "aquaculture:atlantic_herring": {
+    "aquaculture:herring": {
       "chance": 0.05
     },
     "aquaculture:carp": {
@@ -78,9 +78,6 @@
     "aquaculture:bayad": {
       "chance": 0.25
     },
-    "aquaculture:goldfish": {
-      "chance": 0.05
-    },
     "aquaculture:boulti": {
       "chance": 0.05
     },
@@ -96,7 +93,7 @@
     "aquaculture:tuna": {
       "chance": 0.5
     },
-    "aquaculture:atlantic_cod": {
+    "aquaculture:cod": {
       "chance": 0.5
     }
   }

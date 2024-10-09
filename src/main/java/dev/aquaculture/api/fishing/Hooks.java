@@ -1,6 +1,5 @@
 package dev.aquaculture.api.fishing;
 
-import dev.aquaculture.init.AquaSounds;
 import net.minecraft.ChatFormatting;
 
 public class Hooks {

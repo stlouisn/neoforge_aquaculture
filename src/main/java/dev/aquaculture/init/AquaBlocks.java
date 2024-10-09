@@ -2,7 +2,6 @@ package dev.aquaculture.init;
 
 import dev.aquaculture.Aquaculture;
 import dev.aquaculture.block.TackleBoxBlock;
-import dev.aquaculture.block.WormFarmBlock;
 import dev.aquaculture.item.BlockItemWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -17,7 +16,6 @@ import java.util.function.Supplier;
 public class AquaBlocks {
     public static final DeferredRegister.Blocks BLOCK_DEFERRED = DeferredRegister.createBlocks(Aquaculture.MOD_ID);
     public static final DeferredBlock<Block> TACKLE_BOX = registerWithRenderer(TackleBoxBlock::new, "tackle_box", new Item.Properties());
-    public static final DeferredBlock<Block> WORM_FARM = register(WormFarmBlock::new, "worm_farm");
 
     /**
      * Same as {@link AquaBlocks#register(Supplier, String, Item.Properties)}, but have group set by default

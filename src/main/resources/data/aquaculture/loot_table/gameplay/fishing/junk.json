@@ -22,16 +22,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "aquaculture:goldfish"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "name": "aquaculture:message_in_a_bottle"
-        },
-        {
-          "type": "minecraft:item",
           "conditions": [
             {
               "condition": "aquaculture:biome_tag_check",

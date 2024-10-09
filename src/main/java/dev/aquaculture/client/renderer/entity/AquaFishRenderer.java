@@ -26,7 +26,7 @@ import net.minecraft.util.Mth;
 import javax.annotation.Nonnull;
 
 public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<AquaFishEntity>> {
-    private static final ResourceLocation DEFAULT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "textures/entity/fish/atlantic_cod.png");
+    private static final ResourceLocation DEFAULT_LOCATION = ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "textures/entity/fish/cod.png");
     private final TropicalFishModelB<AquaFishEntity> tropicalFishBModel;
     private final FishSmallModel<AquaFishEntity> smallModel;
     private final FishMediumModel<AquaFishEntity> mediumModel;
@@ -46,14 +46,12 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
         this.jellyfishModel = new JellyfishModel<>(context.bakeLayer(ClientHandler.JELLYFISH_MODEL));
 
         if (isJellyfish) {
-          // noinspection rawtypes
           this.addLayer(new JellyfishLayer(this, context.getModelSet()));
         }
     }
 
     @Override
     public void render(@Nonnull AquaFishEntity fishEntity, float entityYaw, float partialTicks, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i) {
-      //noinspection ConstantValue
       if (fishEntity != null) {
             switch (fishEntity.getFishType()) {
                 case SMALL -> this.model = smallModel;
@@ -72,7 +70,6 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     @Nonnull
     public ResourceLocation getTextureLocation(@Nonnull AquaFishEntity fishEntity) {
         ResourceLocation location = BuiltInRegistries.ENTITY_TYPE.getKey(fishEntity.getType());
-      //noinspection ConstantValue
       if (location != null) {
             return ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "textures/entity/fish/" + location.getPath() + ".png");
         }
@@ -117,13 +114,12 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     protected void scale(AquaFishEntity fishEntity, @Nonnull PoseStack matrixStack, float partialTickTime) {
         ResourceLocation location = BuiltInRegistries.ENTITY_TYPE.getKey(fishEntity.getType());
         float scale = 0.0F;
-      //noinspection ConstantValue
       if (location != null) {
             switch (location.getPath()) {
                 case "synodontis" -> scale = 0.8F;
                 case "brown_trout", "piranha" -> scale = 0.9F;
                 case "pollock" -> scale = 1.1F;
-                case "atlantic_cod", "blackfish", "catfish", "tambaqui" -> scale = 1.2F;
+                case "cod", "blackfish", "catfish", "tambaqui" -> scale = 1.2F;
                 case "pacific_halibut", "atlantic_halibut", "capitaine", "largemouth_bass", "gar", "arapaima", "tuna" -> scale = 1.4F;
             }
         }

@@ -16,6 +16,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 public class HookItem extends Item {
     private final Hook hook;
@@ -31,7 +32,7 @@ public class HookItem extends Item {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Item.TooltipContext tooltipContext, List<Component> tooltips, TooltipFlag tooltipFlag) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Item.TooltipContext tooltipContext, @NotNull List<Component> tooltips, @NotNull TooltipFlag tooltipFlag) {
         Hook hook = getHookType();
         if (hook != Hooks.EMPTY && hook.getFluids().contains(FluidTags.LAVA)) {
             if (hook.getFluids().contains(FluidTags.WATER)) {

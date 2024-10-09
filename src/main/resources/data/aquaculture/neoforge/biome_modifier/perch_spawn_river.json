@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:perch",
+    "weight": 20,
+    "minCount": 1,
+    "maxCount": 4
+  },
+  "includeBiomes": ["#aquaculture:empty"],
+  "excludeBiomes": ["#c:is_ocean", "#c:is_beach", "#c:is_hot", "#c:is_desert", "#c:is_jungle"],
+  "and": false
+}

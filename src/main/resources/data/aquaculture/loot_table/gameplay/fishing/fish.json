@@ -29,7 +29,7 @@
             }
           ],
           "weight": 15,
-          "name": "aquaculture:atlantic_cod"
+          "name": "aquaculture:cod"
         },
         {
           "type": "minecraft:item",
@@ -109,7 +109,7 @@
             }
           ],
           "weight": 60,
-          "name": "aquaculture:atlantic_herring"
+          "name": "aquaculture:herring"
         },
         {
           "type": "minecraft:item",

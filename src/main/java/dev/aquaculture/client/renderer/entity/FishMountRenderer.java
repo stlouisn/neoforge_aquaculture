@@ -56,10 +56,8 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         matrixStack.pushPose();
         matrixStack.translate(-0.5D, -0.5D, -0.5D);
         ResourceLocation entityTypeID = BuiltInRegistries.ENTITY_TYPE.getKey(fishMount.getType());
-      //noinspection ConstantValue
       if (entityTypeID != null) {
             ModelResourceLocation location = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/" + entityTypeID.getPath()), "standalone");
-        //noinspection deprecation
         rendererDispatcher.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()), null, manager.getModel(location), 1.0F, 1.0F, 1.0F, i, OverlayTexture.NO_OVERLAY);
         }
         matrixStack.popPose();
@@ -125,7 +123,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
             bd = bd.round(new MathContext(3));
 
             matrixStack.pushPose();
-            matrixStack.translate(0.0D, -0.25D, 0.0D); //Adjust weight label height
+            matrixStack.translate(0.0D, -0.25D, 0.0D);
             if (bd.doubleValue() > 999) {
                 super.renderNameTag(fishMount, Component.translatable("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), matrixStack, buffer, i - 100, partialTick);
             } else {

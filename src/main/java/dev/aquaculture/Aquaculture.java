@@ -16,8 +16,6 @@ import dev.aquaculture.item.crafting.ConditionFactory;
 import dev.aquaculture.loot.AquaBiomeModifiers;
 import dev.aquaculture.loot.FishWeightHandler;
 import dev.aquaculture.misc.AquaConfig;
-import cpw.mods.modlauncher.Environment;
-import cpw.mods.modlauncher.Launcher;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -40,16 +38,13 @@ import org.apache.logging.log4j.Logger;
 @Mod(value = Aquaculture.MOD_ID)
 public class Aquaculture {
     public static Aquaculture instance;
-    public static final boolean IS_DEV = Launcher.INSTANCE.environment().getProperty(Environment.Keys.VERSION.get()).filter(v -> v.equals("MOD_DEV")).isPresent();
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> GROUP = CREATIVE_TABS.register("tab", () -> new CreativeModeTab.Builder(CreativeModeTab.Row.TOP, 0)
-            .icon(() -> new ItemStack(AquaItems.IRON_FISHING_ROD.get()))
-            .title(Component.translatable("tabs." + MOD_ID + ".tab"))
-            .displayItems((featureFlagSet, tabOutput) -> {
-                AquaItems.ITEMS_FOR_TAB_LIST.forEach(registryObject -> tabOutput.accept(new ItemStack(registryObject.get())));
-            }).build()
+        .icon(() -> new ItemStack(AquaItems.IRON_FISHING_ROD.get()))
+        .title(Component.translatable("tabs." + MOD_ID + ".tab"))
+        .displayItems((featureFlagSet, tabOutput) -> AquaItems.ITEMS_FOR_TAB_LIST.forEach(registryObject -> tabOutput.accept(new ItemStack(registryObject.get())))).build()
     );
 
     public Aquaculture(ModContainer modContainer, IEventBus modBus) {
