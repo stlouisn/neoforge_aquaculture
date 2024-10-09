@@ -8,6 +8,7 @@ import dev.aquaculture.init.AquaItems;
 import dev.aquaculture.init.AquaLootTables;
 import dev.aquaculture.init.AquaSounds;
 import dev.aquaculture.item.AquaFishingRodItem;
+import dev.aquaculture.item.BaitItem;
 import dev.aquaculture.item.HookItem;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -161,10 +162,8 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityWithC
                         ItemStackHandler rodHandler = AquaFishingRodItem.getHandler(this.fishingRod);
                         ItemStack bait = rodHandler.getStackInSlot(1);
                         if (!bait.isEmpty()) {
-                            bait.hurtAndBreak(1, serverLevel, null, item -> {
-                                bait.shrink(1);
-                                this.playSound(AquaSounds.BOBBER_BAIT_BREAK.get(), 0.7F, 0.2F);
-                            });
+                            BaitItem baitItem = (BaitItem) bait.getItem();
+                            baitItem.decreaseUsesLeft(bait, angler);
                             rodHandler.setStackInSlot(1, bait);
                         }
                     }

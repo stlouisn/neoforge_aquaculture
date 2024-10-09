@@ -25,7 +25,6 @@ public final class AquaSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> FISH_HURT = registerSound("fish_hurt");
     public static final DeferredHolder<SoundEvent, SoundEvent> JELLYFISH_COLLIDE = registerSound("jellyfish_collide");
     public static final DeferredHolder<SoundEvent, SoundEvent> BOTTLE_OPEN = registerSound("bottle_open");
-    public static final DeferredHolder<SoundEvent, SoundEvent> BOBBER_NOTE = registerSound("bobber_note_catch");
 
     private static DeferredHolder<SoundEvent, SoundEvent> registerSound(String name) {
         ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, name);

@@ -4,10 +4,7 @@
     "aquaculture:iron_hook",
     "aquaculture:gold_hook",
     "aquaculture:diamond_hook",
-    "aquaculture:light_hook",
-    "aquaculture:heavy_hook",
     "aquaculture:double_hook",
-    "aquaculture:redstone_hook",
-    "aquaculture:note_hook"
+    "aquaculture:redstone_hook"
   ]
 }

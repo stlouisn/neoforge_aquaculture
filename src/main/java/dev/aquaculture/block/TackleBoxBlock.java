@@ -95,6 +95,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
             BlockEntity tileEntity = level.getBlockEntity(pos);
             if (tileEntity != null) {
               ItemStack giveStack = new ItemStack(this);
+              //noinspection resource
               tileEntity.saveToItem(giveStack, player.level().registryAccess());
               StackHelper.giveItem(serverPlayer, giveStack);
               level.removeBlock(pos, false);
@@ -199,7 +200,8 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
 
         if (blockEntity instanceof TackleBoxBlockEntity) {
             ItemStack tackleBox = new ItemStack(this);
-            blockEntity.saveToItem(tackleBox, player.level().registryAccess());
+          //noinspection resource
+          blockEntity.saveToItem(tackleBox, player.level().registryAccess());
             Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tackleBox);
         }
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
@@ -208,7 +210,8 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     @Override
     public @NotNull ItemStack getCloneItemStack(@NotNull BlockState state, @NotNull HitResult target, @NotNull LevelReader level, @NotNull BlockPos pos, @NotNull Player player) {
         ItemStack cloneItemStack = super.getCloneItemStack(state, target, level, pos, player);
-        level.getBlockEntity(pos, AquaBlockEntities.TACKLE_BOX.get()).ifPresent((blockEntity) -> blockEntity.saveToItem(cloneItemStack, player.level().registryAccess()));
+      //noinspection resource
+      level.getBlockEntity(pos, AquaBlockEntities.TACKLE_BOX.get()).ifPresent((blockEntity) -> blockEntity.saveToItem(cloneItemStack, player.level().registryAccess()));
         return cloneItemStack;
     }
 

@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
 
-public class FishSmallModel<T extends Entity> extends ListModel<T> { //Based on TropicalFishA
+public class FishSmallModel<T extends Entity> extends ListModel<T> {
     private final ModelPart finRight;
     private final ModelPart finTop;
     private final ModelPart tail;

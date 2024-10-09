@@ -71,15 +71,6 @@
 		],
 		"subtitle": "aquaculture.subtitles.bobber_bait"
 	},
-	"bobber_note_catch": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:entity.player.levelup"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.bobber_note_catch"
-	},
 	"bobber_land_lava": {
 		"sounds": [
 			{

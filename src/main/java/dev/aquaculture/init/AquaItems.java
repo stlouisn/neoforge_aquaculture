@@ -26,7 +26,7 @@ public class AquaItems {
     public static final DeferredItem<Item> IRON_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.IRON, new Item.Properties().durability(125)), "iron_fishing_rod");
     public static final DeferredItem<Item> GOLD_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.GOLD, new Item.Properties().durability(55)), "gold_fishing_rod");
     public static final DeferredItem<Item> DIAMOND_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.DIAMOND, new Item.Properties().durability(450)), "diamond_fishing_rod");
-    public static final DeferredItem<Item> WORM = registerWithTab(() -> AquacultureAPI.createBait(15, 1), "worm");
+    public static final DeferredItem<Item> WORM = registerWithTab(() -> AquacultureAPI.createBait(20, 1), "worm");
     public static final DeferredItem<Item> FISHING_LINE = registerWithTab(SimpleItem::new, "fishing_line");
     public static final DeferredItem<Item> BOBBER = registerWithTab(SimpleItem::new, "bobber");
 
@@ -69,7 +69,7 @@ public class AquaItems {
     public static final DeferredItem<Item> JELLYFISH = FishRegistry.register(SimpleItem::new, "jellyfish", FishType.JELLYFISH);
     public static final DeferredItem<Item> RED_GROUPER = FishRegistry.register(FishItem::new, "red_grouper");
     public static final DeferredItem<Item> TUNA = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "tuna", FishType.LARGE);
-    public static final DeferredItem<Item> LEECH = registerWithTab(() -> AquacultureAPI.createBait(35, 1), "leech");
+    public static final DeferredItem<Item> LEECH = registerWithTab(() -> AquacultureAPI.createBait(30, 1), "leech");
     public static final DeferredItem<Item> GOLDFISH = registerWithTab(SimpleItem::new, "goldfish");
 
     //Fish Mounting
@@ -84,13 +84,8 @@ public class AquaItems {
     public static final DeferredItem<Item> IRON_HOOK = AquacultureAPI.registerHook(Hooks.IRON);
     public static final DeferredItem<Item> GOLD_HOOK = AquacultureAPI.registerHook(Hooks.GOLD);
     public static final DeferredItem<Item> DIAMOND_HOOK = AquacultureAPI.registerHook(Hooks.DIAMOND);
-    public static final DeferredItem<Item> LIGHT_HOOK = AquacultureAPI.registerHook(Hooks.LIGHT);
-    public static final DeferredItem<Item> HEAVY_HOOK = AquacultureAPI.registerHook(Hooks.HEAVY);
     public static final DeferredItem<Item> DOUBLE_HOOK = AquacultureAPI.registerHook(Hooks.DOUBLE);
     public static final DeferredItem<Item> REDSTONE_HOOK = AquacultureAPI.registerHook(Hooks.REDSTONE);
-    public static final DeferredItem<Item> NOTE_HOOK = AquacultureAPI.registerHook(Hooks.NOTE);
-
-
 
     /**
      * Registers an item

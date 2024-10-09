@@ -108,7 +108,8 @@ public class Hook {
 
   public static class HookBuilder {
 
-    private String name, modID = Aquaculture.MOD_ID;
+    private String name;
+    private final String modID = Aquaculture.MOD_ID;
     private ChatFormatting color = ChatFormatting.WHITE;
     private int minCatchable, maxCatchable;
     private Vec3 weightModifier;
@@ -123,12 +124,6 @@ public class Hook {
 
     public HookBuilder(String name) {
       this.name = name;
-    }
-
-    @SuppressWarnings("unused")
-    public HookBuilder setModID(String modID) {
-      this.modID = modID;
-      return this;
     }
 
     public HookBuilder setColor(ChatFormatting color) {

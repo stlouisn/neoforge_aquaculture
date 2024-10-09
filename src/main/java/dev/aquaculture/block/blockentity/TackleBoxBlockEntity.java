@@ -36,13 +36,13 @@ public class TackleBoxBlockEntity extends IItemHandlerBEBase implements MenuProv
         }
 
         @Override
-        protected void onClose(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state) {
+        protected void onClose(@Nonnull Level level, @NotNull BlockPos pos, @Nonnull BlockState state) {
             TackleBoxBlockEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_CLOSE.get());
         }
 
         @Override
-        protected void openerCountChanged(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, int i, int i1) {
-            TackleBoxBlockEntity.this.signalOpenCount(level, pos, state, i, i1);
+        protected void openerCountChanged(@NotNull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, int count, int openCount) {
+            TackleBoxBlockEntity.this.signalOpenCount(level, pos, state, count, openCount);
         }
 
         @Override
@@ -94,9 +94,9 @@ public class TackleBoxBlockEntity extends IItemHandlerBEBase implements MenuProv
         tackleBox.lidController.tickLid();
     }
 
-    protected void signalOpenCount(Level level, BlockPos pos, BlockState state, int i, int i1) {
+    protected void signalOpenCount(Level level, BlockPos pos, BlockState state, int ignoredEventID, int eventParam) {
         Block block = state.getBlock();
-        level.blockEvent(pos, block, 1, i1);
+        level.blockEvent(pos, block, 1, eventParam);
     }
 
     static void playSound(Level level, BlockPos pos, BlockState ignoredState, SoundEvent sound) {

@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class JellyfishModel<T extends Entity> extends ListModel<T> {
     private final ModelPart head;
@@ -51,8 +52,7 @@ public class JellyfishModel<T extends Entity> extends ListModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack p_103013_, VertexConsumer p_103014_, int p_103015_, int p_103016_, int p_350701_) {
-        //Actual rendering done in the layer. Only way I could figure out to keep the transparency
+    public void renderToBuffer(@NotNull PoseStack p_103013_, @NotNull VertexConsumer p_103014_, int p_103015_, int p_103016_, int p_350701_) {
     }
 
     @Override

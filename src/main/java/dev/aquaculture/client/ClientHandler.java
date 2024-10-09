@@ -5,7 +5,7 @@ import dev.aquaculture.client.gui.screen.TackleBoxScreen;
 import dev.aquaculture.client.renderer.entity.AquaBobberRenderer;
 import dev.aquaculture.client.renderer.entity.AquaFishRenderer;
 import dev.aquaculture.client.renderer.entity.FishMountRenderer;
-import dev.aquaculture.client.renderer.entity.model.FishCathfishModel;
+import dev.aquaculture.client.renderer.entity.model.FishCatfishModel;
 import dev.aquaculture.client.renderer.entity.model.FishLargeModel;
 import dev.aquaculture.client.renderer.entity.model.FishLongnoseModel;
 import dev.aquaculture.client.renderer.entity.model.FishMediumModel;
@@ -87,7 +87,7 @@ public class ClientHandler {
         event.registerLayerDefinition(MEDIUM_MODEL, FishMediumModel::createBodyLayer);
         event.registerLayerDefinition(LARGE_MODEL, FishLargeModel::createBodyLayer);
         event.registerLayerDefinition(LONGNOSE_MODEL, FishLongnoseModel::createBodyLayer);
-        event.registerLayerDefinition(CATFISH_MODEL, FishCathfishModel::createBodyLayer);
+        event.registerLayerDefinition(CATFISH_MODEL, FishCatfishModel::createBodyLayer);
         event.registerLayerDefinition(JELLYFISH_MODEL, JellyfishModel::createBodyLayer);
     }
 

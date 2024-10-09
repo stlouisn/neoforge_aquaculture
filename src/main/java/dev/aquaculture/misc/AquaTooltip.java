@@ -36,7 +36,6 @@ public class AquaTooltip {
                     }
                 }
             }
-           //stack.getTags().forEach((tag) -> event.getToolTip().add(Component.literal(tag.location().toString()))); //Debug code for tooltips. Comment out when not used
         }
     }
 }

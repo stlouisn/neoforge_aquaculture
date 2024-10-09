@@ -52,6 +52,7 @@ public class TackleBoxRenderer <T extends TackleBoxBlockEntity> implements Block
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public void render(@Nonnull T tackleBox, float partialTicks, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         Level world = tackleBox.getLevel();

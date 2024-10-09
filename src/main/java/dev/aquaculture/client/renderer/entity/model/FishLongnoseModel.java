@@ -59,7 +59,7 @@ public class FishLongnoseModel <T extends Entity> extends ListModel<T> { //Based
             f = 1.3F;
             f1 = 1.7F;
         }
-        float moveAmount = 0.15F; //Default for Salmon is 0.25F
+        float moveAmount = 0.15F;
         this.bodyRear.yRot = -f * moveAmount * Mth.sin(f1 * 0.6F * ageInTicks);
     }
 }

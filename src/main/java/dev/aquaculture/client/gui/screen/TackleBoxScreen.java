@@ -36,7 +36,7 @@ public class TackleBoxScreen extends AbstractContainerScreen<TackleBoxContainer>
         int y = (this.height - this.imageHeight) / 2;
         guiGraphics.blit(TACKLE_BOX_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
-        if (this.menu.slotHook != null && this.menu.slotHook.isActive()) { //Only checking one slot, since they're all disabled at the same time
+        if (this.menu.slotHook != null && this.menu.slotHook.isActive()) {
             if (this.menu.slotHook.hasItem()) {
                 this.renderEmptySlot(x + 105, y + 43, guiGraphics);
             } else {

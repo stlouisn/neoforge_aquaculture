@@ -5,7 +5,7 @@ import com.mojang.math.Axis;
 import dev.aquaculture.Aquaculture;
 import dev.aquaculture.client.ClientHandler;
 import dev.aquaculture.client.renderer.entity.layers.JellyfishLayer;
-import dev.aquaculture.client.renderer.entity.model.FishCathfishModel;
+import dev.aquaculture.client.renderer.entity.model.FishCatfishModel;
 import dev.aquaculture.client.renderer.entity.model.FishLargeModel;
 import dev.aquaculture.client.renderer.entity.model.FishLongnoseModel;
 import dev.aquaculture.client.renderer.entity.model.FishMediumModel;
@@ -32,7 +32,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     private final FishMediumModel<AquaFishEntity> mediumModel;
     private final FishLargeModel<AquaFishEntity> largeModel;
     private final FishLongnoseModel<AquaFishEntity> longnoseModel;
-    private final FishCathfishModel<AquaFishEntity> catfishModel;
+    private final FishCatfishModel<AquaFishEntity> catfishModel;
     private final JellyfishModel<AquaFishEntity> jellyfishModel;
 
     public AquaFishRenderer(EntityRendererProvider.Context context, boolean isJellyfish) {
@@ -42,17 +42,19 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
         this.mediumModel = new FishMediumModel<>(context.bakeLayer(ClientHandler.MEDIUM_MODEL));
         this.largeModel = new FishLargeModel<>(context.bakeLayer(ClientHandler.LARGE_MODEL));
         this.longnoseModel = new FishLongnoseModel<>(context.bakeLayer(ClientHandler.LONGNOSE_MODEL));
-        this.catfishModel = new FishCathfishModel<>(context.bakeLayer(ClientHandler.CATFISH_MODEL));
+        this.catfishModel = new FishCatfishModel<>(context.bakeLayer(ClientHandler.CATFISH_MODEL));
         this.jellyfishModel = new JellyfishModel<>(context.bakeLayer(ClientHandler.JELLYFISH_MODEL));
 
         if (isJellyfish) {
-            this.addLayer(new JellyfishLayer(this, context.getModelSet()));
+          // noinspection rawtypes
+          this.addLayer(new JellyfishLayer(this, context.getModelSet()));
         }
     }
 
     @Override
     public void render(@Nonnull AquaFishEntity fishEntity, float entityYaw, float partialTicks, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i) {
-        if (fishEntity != null) {
+      //noinspection ConstantValue
+      if (fishEntity != null) {
             switch (fishEntity.getFishType()) {
                 case SMALL -> this.model = smallModel;
                 case LARGE -> this.model = largeModel;
@@ -70,7 +72,8 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     @Nonnull
     public ResourceLocation getTextureLocation(@Nonnull AquaFishEntity fishEntity) {
         ResourceLocation location = BuiltInRegistries.ENTITY_TYPE.getKey(fishEntity.getType());
-        if (location != null) {
+      //noinspection ConstantValue
+      if (location != null) {
             return ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "textures/entity/fish/" + location.getPath() + ".png");
         }
         return DEFAULT_LOCATION;
@@ -114,7 +117,8 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     protected void scale(AquaFishEntity fishEntity, @Nonnull PoseStack matrixStack, float partialTickTime) {
         ResourceLocation location = BuiltInRegistries.ENTITY_TYPE.getKey(fishEntity.getType());
         float scale = 0.0F;
-        if (location != null) {
+      //noinspection ConstantValue
+      if (location != null) {
             switch (location.getPath()) {
                 case "synodontis" -> scale = 0.8F;
                 case "brown_trout", "piranha" -> scale = 0.9F;

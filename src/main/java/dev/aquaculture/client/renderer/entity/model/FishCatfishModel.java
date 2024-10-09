@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
 
-public class FishCathfishModel<T extends Entity> extends ListModel<T> { //Based on Cod
+public class FishCatfishModel<T extends Entity> extends ListModel<T> {
     private final ModelPart head;
     private final ModelPart headFront;
     private final ModelPart body;
@@ -25,7 +25,7 @@ public class FishCathfishModel<T extends Entity> extends ListModel<T> { //Based 
     private final ModelPart leftWhisker;
     private final ModelPart rightWhisker;
 
-    public FishCathfishModel(ModelPart part) {
+    public FishCatfishModel(ModelPart part) {
         this.head = part.getChild("head");
         this.headFront = part.getChild("head_front");
         this.body = part.getChild("body");

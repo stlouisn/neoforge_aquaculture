@@ -65,6 +65,7 @@ public class FishData {
     return FILLET_AMOUNT.containsKey(fish);
   }
 
+  @SuppressWarnings("unused")
   public int getFilletAmount(Item fish) {
     return FILLET_AMOUNT.get(fish);
   }
@@ -74,6 +75,7 @@ public class FishData {
     return FILLET_AMOUNT.getOrDefault(fish, defaultValue);
   }
 
+  @SuppressWarnings("unused")
   public static int getFilletAmountFromWeight(double weight) {
     if (weight >= 2 && weight < 10D) {
       return 1;

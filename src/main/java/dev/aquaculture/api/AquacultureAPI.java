@@ -21,8 +21,8 @@ public class AquacultureAPI {
      **/
     public static FishData FISH_DATA = new FishData();
 
-    public static BaitItem createBait(int durability, int lureSpeedModifier) {
-        return new BaitItem(durability, lureSpeedModifier);
+    public static BaitItem createBait(int usesMax, int lureSpeedModifier) {
+        return new BaitItem(usesMax, lureSpeedModifier);
     }
 
     public static DeferredItem<Item> registerFishMount(@Nonnull String name) {

@@ -132,11 +132,11 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
         return BOBBER_VANILLA;
     }
 
-    private static void renderPosTexture(VertexConsumer builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v) {
+    private static void renderPosTexture(VertexConsumer builder, Matrix4f matrix4f, Matrix3f ignoredMatrix3f, int i, float x, int y, int u, int v) {
         builder.addVertex(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).setColor(255, 255, 255, 255).setUv((float) u, (float) v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(i).setNormal(0.0F, 1.0F, 0.0F);
     }
 
-    private static void vertex(VertexConsumer builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v, float r, float g, float b) {
+    private static void vertex(VertexConsumer builder, Matrix4f matrix4f, Matrix3f ignoredMatrix3f, int i, float x, int y, int u, int v, float r, float g, float b) {
         builder.addVertex(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).setColor(r, g, b, 1.0F).setUv((float) u, (float) v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(i).setNormal(0.0F, 1.0F, 0.0F);
     }
 
