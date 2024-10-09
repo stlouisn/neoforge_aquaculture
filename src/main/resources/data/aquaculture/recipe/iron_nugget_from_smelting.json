@@ -3,9 +3,6 @@
   "ingredient": [
     {
       "item": "aquaculture:iron_fishing_rod"
-    },
-    {
-      "item": "aquaculture:iron_fillet_knife"
     }
   ],
   "result": {

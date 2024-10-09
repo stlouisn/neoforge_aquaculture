@@ -3,9 +3,6 @@
   "ingredient": [
     {
       "item": "aquaculture:gold_fishing_rod"
-    },
-    {
-      "item": "aquaculture:gold_fillet_knife"
     }
   ],
   "result": {

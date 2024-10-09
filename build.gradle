@@ -1,126 +1,78 @@
 plugins {
-    id 'java-library'
-	id 'eclipse'
-    id 'idea'
-    id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.145'
+    id "dev.architectury.loom" version "${architectury_loom_version}-SNAPSHOT"
+    id "architectury-plugin" version "${architectury_plugin_version}-SNAPSHOT"
+    id "java-library"
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+architectury { minecraft = minecraft_version }
 
-repositories {
-  maven {
-    name = "JEI maven"
-    url = "https://dvs1.progwml6.com/files/maven/"
-  }
-  maven { 
-    name = "CraftTweaker2"
-    url = "https://maven.blamejared.com" 
-  }
-  maven {
-    name = "TerraformersMC"
-	url = "https://maven.terraformersmc.com/"
-  }
-  flatDir { dirs 'deps' }
-}
+group = maven_group
+version = mod_version
 
-version = "${minecraft_version}-${mod_version}" + getBuildNumber()
-group = "com.teammetallurgy.aquaculture"
+base { archivesName = "${archives_base_name}-${minecraft_version}-neoforge" }
 
-base {
-    archivesName = "Aquaculture"
-}
-
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
-
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty 'forge.logging.console.level', 'debug'
-
-        modSource project.sourceSets.main
-    }
-
-    client {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        programArgument '--nogui'
-    }
-
-    gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    data {
-        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-    }
-}
+repositories { maven { url = "https://maven.neoforged.net/releases" } }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
-    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-    compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${minecraft_version}:${ct_version}"
-	compileOnly "dev.emi:emi-neoforge:${emi_version}+1.21:api"
-	runtimeOnly "dev.emi:emi-neoforge:${emi_version}+1.21" 
-}
-
-processResources {
-    def expandProps = [
-            "version": version,
-            "group": project.group, //Else we target the task's group.
-            "minecraft_version": minecraft_version,
-            "minecraft_version_range": minecraft_version_range,
-            "mod_id": mod_id,
-            "mod_version": mod_version,
-            "neo_version": neo_version,
-            "neo_version_range": neo_version_range,
-            "loader_version_range": loader_version_range,
-            "pack_format_number": pack_format_number
-	]
-
-    filesMatching(['pack.mcmeta', 'META-INF/neoforge.mods.toml']) {
-        expand expandProps
-    }
-    inputs.properties(expandProps)
-}
-
-task apiJar(type: Jar) {
-	from sourceSets.main.allSource
-	from sourceSets.main.output
-    include 'com/teammetallurgy/aquaculture/api/**/*'
-    archiveClassifier = 'api'
-}
-
-publishing {
-    tasks.publish.dependsOn 'build'
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId "aquaculture2_${minecraft_version}"
-            artifact jar
-			artifact apiJar
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    neoForge "net.neoforged:neoforge:${neoforge_version}"
+    loom {
+        if (file("src/main/resources/${archives_base_name}.accesswidener").exists()) {
+            accessWidenerPath = file("src/main/resources/${archives_base_name}.accesswidener")
         }
     }
-    repositories {
-        if (project.hasProperty('maven_repo')) {
-            maven { url maven_repo }
-        } else {
-            mavenLocal()
-        }
+    implementation "org.jetbrains:annotations:latest.release"
+}
+
+apply from: "build-mappings.gradle"
+
+if (file("build-dependencies.gradle").exists()) { apply from: "build-dependencies.gradle" }
+
+if (file("src/main/resources/${mod_id}.mixins.json").exists()) { apply from: "build-mixins.gradle" }
+
+if (file("build-runtime.gradle").exists()) { apply from: "build-runtime.gradle" }
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }
 
-artifacts {
-    archives apiJar
-}
-
-String getBuildNumber() {
-    return System.getenv('BUILD_NUMBER') ? ".jenkins" + System.getenv('BUILD_NUMBER') : "";
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    it.options.release = 21
+    it.options.encoding = "UTF-8"
 }
+
+processResources {
+    def stringProperties = providers.gradlePropertiesPrefixedBy('').get()
+    stringProperties.each { inputs.property(it.key, it.value) }
+    ["META-INF/neoforge.mods.toml"].each {
+        filesMatching(it) {
+            expand(stringProperties) { escapeBackslash = true }
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+            [
+                "Specification-Title"     : mod_id,
+                "Specification-Vendor"    : mod_authors,
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : mod_name,
+                "Implementation-Version"  : mod_version,
+                "Implementation-Vendor"   : mod_authors,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            ]
+        )
+    }
+}
+
+remapJar { destinationDirectory.set(file("${rootDir}/files")) }

@@ -23,7 +23,7 @@
 #   Important for running:
 #
 #   (1) You need a POSIX-compliant shell to run this script. If your /bin/sh is
-#       noncompliant, but you have some other compliant shell such as ksh or
+#       non-compliant, but you have some other compliant shell such as ksh or
 #       bash, then to run this script, type that shell name before the whole
 #       command line, like:
 #
@@ -204,7 +204,7 @@ DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 
 # Collect all arguments for the java command:
 #   * DEFAULT_JVM_OPTS, JAVA_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
-#     and any embedded shellness will be escaped.
+#     and any embedded shells will be escaped.
 #   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
 #     treated as '${Hostname}' itself on the command line.
 

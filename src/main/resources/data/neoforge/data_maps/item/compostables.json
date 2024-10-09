@@ -1,13 +1,7 @@
 {
   "values": {
-    "aquaculture:algae": {
-      "chance": 0.3
-    },
     "aquaculture:atlantic_halibut": {
       "chance": 0.65
-    },
-    "aquaculture:minnow": {
-      "chance": 0.05
     },
     "aquaculture:pink_salmon": {
       "chance": 0.05

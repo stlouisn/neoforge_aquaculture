@@ -22,21 +22,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
-          "name": "aquaculture:box"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 4,
-          "name": "aquaculture:lockbox"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "aquaculture:treasure_chest"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 4,
           "name": "aquaculture:goldfish"
         },
@@ -81,19 +66,6 @@
           ],
           "weight": 9,
           "name": "minecraft:kelp"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "exclude": ["c:is_ocean", "c:is_beach"]
-              }
-            }
-          ],
-          "weight": 10,
-          "name": "aquaculture:algae"
         }
       ]
     }

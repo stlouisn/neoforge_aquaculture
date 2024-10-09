@@ -13,10 +13,10 @@
       "tag": "c:storage_blocks/iron"
     },
     "C": {
-      "tag": "c:chests"
+      "item": "minecraft:chest"
     },
     "G": {
-      "tag": "aquaculture:tackle_box_green"
+      "item": "minecraft:green_dye"
     }
   },
   "result": {

@@ -1,0 +1,11 @@
+/ EMI /
+def emi_version = "1.1.16+1.21.1" // https://modrinth.com/mod/emi/versions?l=neoforge
+repositories { maven { url = "https://maven.terraformersmc.com/" }}
+dependencies { modLocalRuntime ( "dev.emi:emi-neoforge:${emi_version}" )}
+println("\nEMI: $emi_version")
+
+/ Farmer's Delight /
+def farmers_delight_file_id = "5772720" // https://www.curseforge.com/minecraft/mc-mods/farmers-delight/files/all?gameVersionTypeId=6
+repositories { maven { url = "https://www.cursemaven.com" }}
+dependencies { modLocalRuntime ( "curse.maven:farmers_delight-398521:${farmers_delight_file_id}" )}
+println("\nFarmer's Delight: CurseForge-$farmers_delight_file_id")
