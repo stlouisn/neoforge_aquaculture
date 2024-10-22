@@ -70,14 +70,6 @@ public class AquaItems {
     public static final DeferredItem<Item> TUNA = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "tuna", FishType.LARGE);
     public static final DeferredItem<Item> LEECH = registerWithTab(() -> AquacultureAPI.createBait(0.04, 1), "leech");
 
-    //Fish Mounting
-    public static final DeferredItem<Item> OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("oak_fish_mount");
-    public static final DeferredItem<Item> SPRUCE_FISH_MOUNT = AquacultureAPI.registerFishMount("spruce_fish_mount");
-    public static final DeferredItem<Item> BIRCH_FISH_MOUNT = AquacultureAPI.registerFishMount("birch_fish_mount");
-    public static final DeferredItem<Item> JUNGLE_FISH_MOUNT = AquacultureAPI.registerFishMount("jungle_fish_mount");
-    public static final DeferredItem<Item> ACACIA_FISH_MOUNT = AquacultureAPI.registerFishMount("acacia_fish_mount");
-    public static final DeferredItem<Item> DARK_OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("dark_oak_fish_mount");
-
     //Hooks
     public static final DeferredItem<Item> IRON_HOOK = AquacultureAPI.registerHook(Hooks.IRON);
     public static final DeferredItem<Item> GOLD_HOOK = AquacultureAPI.registerHook(Hooks.GOLD);

@@ -17,42 +17,6 @@
 		],
 		"subtitle": "aquaculture.subtitles.tackle_box_close"
 	},
-	"fish_mount_removed": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:entity.item_frame.remove_item"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.fish_mount_removed"
-	},
-	"fish_mount_broken": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:entity.item_frame.break"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.fish_mount_broken"
-	},
-	"fish_mount_placed": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:entity.item_frame.place"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.fish_mount_placed"
-	},
-	"fish_mount_add_item": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:entity.item_frame.add_item"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.fish_mount_add_item"
-	},
 	"bobber_land_lava": {
 		"sounds": [
 			{

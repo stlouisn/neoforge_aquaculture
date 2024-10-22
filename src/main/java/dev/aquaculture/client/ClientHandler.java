@@ -4,7 +4,6 @@ import dev.aquaculture.Aquaculture;
 import dev.aquaculture.client.gui.screen.TackleBoxScreen;
 import dev.aquaculture.client.renderer.entity.AquaBobberRenderer;
 import dev.aquaculture.client.renderer.entity.AquaFishRenderer;
-import dev.aquaculture.client.renderer.entity.FishMountRenderer;
 import dev.aquaculture.client.renderer.entity.model.FishCatfishModel;
 import dev.aquaculture.client.renderer.entity.model.FishLargeModel;
 import dev.aquaculture.client.renderer.entity.model.FishLongnoseModel;
@@ -13,7 +12,6 @@ import dev.aquaculture.client.renderer.entity.model.FishSmallModel;
 import dev.aquaculture.client.renderer.entity.model.JellyfishModel;
 import dev.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
 import dev.aquaculture.entity.AquaFishEntity;
-import dev.aquaculture.entity.FishMountEntity;
 import dev.aquaculture.init.AquaBlockEntities;
 import dev.aquaculture.init.AquaEntities;
 import dev.aquaculture.init.AquaGuis;
@@ -22,7 +20,6 @@ import dev.aquaculture.init.FishRegistry;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
@@ -35,7 +32,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -75,9 +71,6 @@ public class ClientHandler {
         for (DeferredHolder<EntityType<?>, EntityType<AquaFishEntity>> fish : FishRegistry.fishEntities) {
             event.registerEntityRenderer(fish.get(), (context) -> new AquaFishRenderer(context, BuiltInRegistries.ENTITY_TYPE.getKey(fish.get()).equals(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "jellyfish"))));
         }
-        for (DeferredHolder<EntityType<?>, EntityType<FishMountEntity>> fishMount : FishRegistry.fishMounts) {
-            event.registerEntityRenderer(fishMount.get(), FishMountRenderer::new);
-        }
     }
 
     @SubscribeEvent
@@ -89,16 +82,6 @@ public class ClientHandler {
         event.registerLayerDefinition(LONGNOSE_MODEL, FishLongnoseModel::createBodyLayer);
         event.registerLayerDefinition(CATFISH_MODEL, FishCatfishModel::createBodyLayer);
         event.registerLayerDefinition(JELLYFISH_MODEL, JellyfishModel::createBodyLayer);
-    }
-
-    @SubscribeEvent
-    public static void registerModels(ModelEvent.RegisterAdditional event) {
-        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/oak_fish_mount")));
-        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/spruce_fish_mount")));
-        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/birch_fish_mount")));
-        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/jungle_fish_mount")));
-        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/acacia_fish_mount")));
-        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(Aquaculture.MOD_ID, "block/dark_oak_fish_mount")));
     }
 
     public static void registerFishingRodModelProperties(Item fishingRod) {

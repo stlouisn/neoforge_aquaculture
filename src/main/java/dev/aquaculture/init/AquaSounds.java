@@ -11,10 +11,6 @@ public final class AquaSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENT_DEFERRED = DeferredRegister.create(Registries.SOUND_EVENT, Aquaculture.MOD_ID);
     public static final DeferredHolder<SoundEvent, SoundEvent> TACKLE_BOX_OPEN = registerSound("tackle_box_open");
     public static final DeferredHolder<SoundEvent, SoundEvent> TACKLE_BOX_CLOSE = registerSound("tackle_box_close");
-    public static final DeferredHolder<SoundEvent, SoundEvent> FISH_MOUNT_REMOVED = registerSound("fish_mount_removed");
-    public static final DeferredHolder<SoundEvent, SoundEvent> FISH_MOUNT_BROKEN = registerSound("fish_mount_broken");
-    public static final DeferredHolder<SoundEvent, SoundEvent> FISH_MOUNT_PLACED = registerSound("fish_mount_placed");
-    public static final DeferredHolder<SoundEvent, SoundEvent> FISH_MOUNT_ADD_ITEM = registerSound("fish_mount_add_item");
     public static final DeferredHolder<SoundEvent, SoundEvent> BOBBER_LAND_IN_LAVA = registerSound("bobber_land_lava");
     public static final DeferredHolder<SoundEvent, SoundEvent> JELLYFISH_FLOP = registerSound("jellyfish_flop");
     public static final DeferredHolder<SoundEvent, SoundEvent> FISH_FLOP = registerSound("fish_flop");
