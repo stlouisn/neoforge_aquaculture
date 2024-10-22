@@ -17,6 +17,7 @@ out
 
 # gradle
 build
+!build/libs
 .gradle
 
 # architectury
