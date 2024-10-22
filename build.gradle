@@ -75,4 +75,5 @@ jar {
     }
 }
 
-remapJar { destinationDirectory.set(file("${rootDir}/files")) }
+//remapJar { destinationDirectory.set(file("${rootDir}/files")) }
+remapJar { }
