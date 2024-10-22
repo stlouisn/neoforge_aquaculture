@@ -14,7 +14,7 @@ public class FurnaceFuel {
   public static void fuel(FurnaceFuelBurnTimeEvent event) {
     ItemStack stack = event.getItemStack();
     if (stack.getItem() == AquaItems.DRIFTWOOD.get()) {
-      event.setBurnTime(600);
+      event.setBurnTime(1600);
     }
   }
 }

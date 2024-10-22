@@ -18,8 +18,8 @@ public class AquaConfig {
 
     BasicOptions(ModConfigSpec.Builder builder) {
       builder.push(BASIC_OPTIONS);
-      randomWeight = builder.define("Enable weight for fish? Useful for fishing competitions", false);
-      fishSpawnLevelModifier = builder.defineInRange("How many blocks below sea level Aquaculture fish can spawn", 13, -63, 0);
+      randomWeight = builder.define("Enable weight for fish? Useful for fishing competitions", true);
+      fishSpawnLevelModifier = builder.defineInRange("How many blocks below sea level Aquaculture fish can spawn", -13, -63, 0);
       builder.pop();
     }
   }

@@ -104,10 +104,7 @@ public class FishWeightHandler {
     float weight = (float) (min + Math.random() * (max - min));
     if (!fish.has(AquaDataComponents.FISH_WEIGHT)) {
       fish.set(AquaDataComponents.FISH_WEIGHT, weight);
-      if (weight <= max * 0.10F) {
-        fish.set(AquaDataComponents.FISH_SIZE, "juvenile");
-      }
-      else if (weight > max * 0.10F && weight <= max * 0.20F) {
+      if (weight <= max * 0.20F) {
         fish.set(AquaDataComponents.FISH_SIZE, "small");
       }
       else if (weight >= max * 0.80F && weight < max * 0.90F) {
@@ -151,6 +148,6 @@ public class FishWeightHandler {
     AquacultureAPI.FISH_DATA.add(Items.COD, 12, 211, 4);
     AquacultureAPI.FISH_DATA.add(Items.SALMON, 0.6, 15, 2);
     AquacultureAPI.FISH_DATA.add(Items.TROPICAL_FISH, 0.01, 1, 0);
-    AquacultureAPI.FISH_DATA.add(Items.PUFFERFISH, 1, 25, 1);
+//    AquacultureAPI.FISH_DATA.add(Items.PUFFERFISH, 1, 25, 1);
   }
 }

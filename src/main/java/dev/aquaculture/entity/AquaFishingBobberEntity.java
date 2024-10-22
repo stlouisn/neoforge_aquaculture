@@ -135,7 +135,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityWithC
           else {
             if (!level.isEmptyBlock(this.blockPosition()) && (level.getFluidState(this.blockPosition()).isSource())) {
               Aquaculture.LOG.error("Loot was empty in Biome: Fallback attempt");
-              lootEntries.add(new ItemStack(Items.COD));
+              lootEntries.add(new ItemStack(AquaItems.COD.get()));
               ResourceLocation biomeFromRegistry = level.registryAccess().registryOrThrow(Registries.BIOME).getKey(level.getBiome(this.blockPosition()).value());
               if (biomeFromRegistry != null) {
                 Aquaculture.LOG.error("Loot was empty in Biome: {}. Please report on Github", biomeFromRegistry);
